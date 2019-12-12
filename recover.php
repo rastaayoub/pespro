@@ -2,11 +2,11 @@
 include('header.php');
 if($is_online){redirect('index.php');}
 if($site['captcha_sys'] == 0){
-	require('captcha.php');
+	include('captcha.php');
 }elseif($site['captcha_sys'] == 1){
-	require('system/libs/recaptchalib.php');
+	include('system/libs/recaptcha/autoload.php');
 }elseif($site['captcha_sys'] == 2){
-	require('system/libs/solvemedialib.php');
+	include('system/libs/solvemedialib.php');
 }
 
 $mesaj = '';
@@ -18,9 +18,10 @@ if(isset($_GET['hash']) && $_GET['hash'] > 0 && is_numeric($_GET['hash'])){
 	if($site['captcha_sys'] != 3){
 		$captcha_valid = 0;
 		if($site['captcha_sys'] == 1){
-			$recaptcha_error = null;
-			$resp = recaptcha_check_answer($site['recaptcha_sec'],$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
-			if($resp->is_valid){
+			$recaptcha = new \ReCaptcha\ReCaptcha($site['recaptcha_sec']);
+			$recaptcha = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+		
+			if($recaptcha->isSuccess()){
 				$captcha_valid = 1;
 			}else{
 				$recaptcha_error = $resp->error;
@@ -79,7 +80,7 @@ if(isset($_GET['hash']) && $_GET['hash'] > 0 && is_numeric($_GET['hash'])){
 			<p>
 				<?
 				if($site['captcha_sys'] == 1){
-					echo '<script type="text/javascript"> var RecaptchaOptions = { theme : \'white\' }; </script>'.recaptcha_get_html($site['recaptcha_pub'], $recaptcha_error);
+					echo '<script src="https://www.google.com/recaptcha/api.js"></script><div class="g-recaptcha" data-sitekey="'.$site['recaptcha_pub'].'"></div>';
 				}elseif($site['captcha_sys'] == 2){
 					echo solvemedia_get_html($site['solvemedia_c']);
 				}else{
@@ -109,9 +110,10 @@ if(isset($_POST['send'])) {
 	if($site['captcha_sys'] != 3){
 		$captcha_valid = 0;
 		if($site['captcha_sys'] == 1){
-			$recaptcha_error = null;
-			$resp = recaptcha_check_answer($site['recaptcha_sec'],$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
-			if($resp->is_valid){
+			$recaptcha = new \ReCaptcha\ReCaptcha($site['recaptcha_sec']);
+			$recaptcha = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+		
+			if($recaptcha->isSuccess()){
 				$captcha_valid = 1;
 			}else{
 				$recaptcha_error = $resp->error;
@@ -208,7 +210,7 @@ if(isset($_POST['send'])) {
 			<p>
 				<?
 				if($site['captcha_sys'] == 1){
-					echo '<script type="text/javascript"> var RecaptchaOptions = { theme : \'white\' }; </script>'.recaptcha_get_html($site['recaptcha_pub'], $recaptcha_error);
+					echo '<script src="https://www.google.com/recaptcha/api.js"></script><div class="g-recaptcha" data-sitekey="'.$site['recaptcha_pub'].'"></div>';
 				}elseif($site['captcha_sys'] == 2){
 					echo solvemedia_get_html($site['solvemedia_c']);
 				}else{

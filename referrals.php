@@ -63,7 +63,7 @@ if($pages > 1){
 		if($begin/20 == 0) {
 			$pagination .= '<img src="theme/'.$site['theme'].'/images/black_arrow_left.png" />';
 		}else{
-			$pagination .= '<a href="?p='.($begin/20-1).'"><img src="theme/'.$site['theme'].'/images/black_arrow_left.png" /></a>';
+			$pagination .= '<a href="referrals.php?commissions&p='.($begin/20-1).'"><img src="theme/'.$site['theme'].'/images/black_arrow_left.png" /></a>';
 		}
 
 		$pagination .= '&nbsp;&nbsp; '.($begin+1).' - '.($begin+20 >= $num ? $num : $begin+20).' &nbsp;&nbsp;';
@@ -71,7 +71,7 @@ if($pages > 1){
 		if($begin+20 >= $num) {
 			$pagination .= '<img src="theme/'.$site['theme'].'/images/black_arrow_right.png" />';
 		}else{
-			$pagination .= '<a href="?p='.($begin/20+1).'"><img src="theme/'.$site['theme'].'/images/black_arrow_right.png" /></a>';
+			$pagination .= '<a href="referrals.php?commissions&p='.($begin/20+1).'"><img src="theme/'.$site['theme'].'/images/black_arrow_right.png" /></a>';
 		}
 	}
 ?>

@@ -1,0 +1,62 @@
+ErrorDocument 404 /404.html
+
+# Redirect from www to non-www (never use both)
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# Protect .htaccess
+<Files .htaccess>
+    order allow,deny
+    deny from all
+</Files>
+
+# Deflate files to fasten the loading
+<IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+    AddOutputFilterByType DEFLATE application/x-httpd-php text/html text/xml text/plain text/css text/javascript application/javascript application/x-javascript image/jpeg image/jpg image/png image/gif font/ttf font/eot font/otf
+</IfModule>
+
+<IfModule mod_deflate.c>
+	# Properly handle old browsers that do not support compression
+	BrowserMatch ^Mozilla/4 gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+	# Explicitly exclude binary files from compression just in case
+	SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|pdf|swf|ico|zip|ttf|eot|svg)$ no-gzip
+</IfModule>
+
+<ifModule mod_headers.c>
+	# Enable Keep Alive
+    Header set Connection keep-alive
+	
+	# Properly handle requests coming from behind proxies
+	Header append Vary User-Agent
+	
+	# Turn on Expires
+	ExpiresActive On
+	
+	# Turn off ETag
+	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
+		Header unset ETag
+		FileETag None
+	</FilesMatch>
+
+	# Set up caching on media files for 5 weeks
+	<FilesMatch "\.(gif|jpg|jpeg|png|swf|flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav|ttf|woff|svg)$">
+		ExpiresDefault A3024000
+		Header append Cache-Control "public"
+	</FilesMatch>
+	 
+	# Set up 7 days caching on commonly updated files
+	<FilesMatch "\.(xml|txt|html|js|css)$">
+		ExpiresDefault A604800
+		Header append Cache-Control "proxy-revalidate"
+	</FilesMatch>
+	 
+	# Force no caching for dynamic files
+	<FilesMatch "\.(php|cgi|pl|htm)$">
+		ExpiresActive Off
+		Header set Cache-Control "private, no-cache, no-store, proxy-revalidate, no-transform"
+		Header set Pragma "no-cache"
+	</FilesMatch>
+</ifModule>

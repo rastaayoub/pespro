@@ -1,0 +1,25 @@
+html {overflow-y:scroll;}
+body {font-family:"Verdana",Arial; color:#4D4D4D; cursor:default; font-size:13px; background:white; margin:0px;}
+form {margin:0px; padding:0px;}
+a {text-decoration:none; color:#2A3BF7;}
+a:hover {text-decoration:underline;}
+h1 {color:#292966; font-weight:bold; font-size:20px; font-family:'Trebuchet MS', Arial; margin:0px 0px 10px 0px; line-height:40px;}
+h2 {font-family:'Trebuchet MS',Arial; margin:0px 0px 5px 0px; font-size:16px; color:#71718A;}
+img {border:0px solid white;}
+table {font-size:13px; padding:0px; margin:0px;	cursor:default;}
+input,select,textarea {-webkit-border-radius:4; -moz-border-radius:4px; border-radius:4px; color:#3D3D3D; border:1px solid #c0c0c0; padding-left:2px; margin-bottom:3px; font-size:13px;}
+input,textarea {padding:3px; overflow:visible; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+select {padding:1px;}
+textarea {font-family:"Nimbus Sans L","FreeSans",Arial;}
+input:focus, textarea:focus {background:#f9f9f9;}
+input {overflow-x:hidden;}
+fieldset {border-color:#c0c0c0; border-width:1px; background:#fcfcfc;}
+legend {font-weight:bold; color:#a0a0a0;}
+button {padding:10px 7px; overflow:visible;}
+div.msg {background-image:url('/img/surf/success_msg.png'); background-position: 6px 50%; background-repeat:no-repeat; background-color:#E7FFE4; color:darkgreen; border:1px dotted darkgreen; padding-left:45px; padding-top:5px; padding-right:5px; padding-bottom:5px; margin:5px 0px; text-align:left;border-radius:3px;}
+div.errormsg {background-image:url('/img/surf/errormsg.png'); background-position: 6px 50%; background-repeat:no-repeat; background-color:#FCD5D5; color:darkred; border:1px dotted darkred; padding-left:45px; padding-top:5px; padding-right:5px; padding-bottom:5px; margin:5px 0px; text-align:left;border-radius:3px;}
+div.bannerrotator {text-align:center;}
+div.bannerrotator_clickads {margin-top:0px;}
+#surfbar_td {border-bottom:1px solid gray; background:#353e43; background-image:url('/img/surf/sda_gradient.png'); background-position: center left; background-repeat: repeat-x;}
+#skipped_td {border-bottom:1px solid gray; background:#efefef; background-image:url('/img/surf/sda_gradient.png'); background-position: center left; background-repeat: repeat-x;font-size:11px;padding-left:10px;padding-right:10px;}
+.small {font-size:11px;}
