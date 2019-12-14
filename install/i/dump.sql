@@ -3,11 +3,11 @@
 --
 
 CREATE TABLE IF NOT EXISTS `activity_rewards` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `exchanges` int(11) NOT NULL DEFAULT '0',
-  `reward` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `exchanges` int(255) NOT NULL DEFAULT '0',
+  `reward` int(255) NOT NULL DEFAULT '0',
   `type` int(32) NOT NULL DEFAULT '0',
-  `claims` int(11) NOT NULL DEFAULT '0',
+  `claims` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS `activity_rewards` (
 --
 
 CREATE TABLE IF NOT EXISTS `activity_rewards_claims` (
-  `reward_id` int(11) NOT NULL DEFAULT '0',
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `date` int(11) NOT NULL DEFAULT '0',
+  `reward_id` int(255) NOT NULL DEFAULT '0',
+  `user_id` int(255) NOT NULL DEFAULT '0',
+  `date` int(255) NOT NULL DEFAULT '0',
   KEY `reward_id` (`reward_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS `activity_rewards_claims` (
 --
 
 CREATE TABLE IF NOT EXISTS `ad_packs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `price` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `days` int(11) NOT NULL DEFAULT '0',
-  `bought` int(11) NOT NULL DEFAULT '0',
+  `days` int(255) NOT NULL DEFAULT '0',
+  `bought` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -47,34 +47,18 @@ INSERT INTO `ad_packs` (`id`, `price`, `days`, `bought`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `affiliate_transactions`
---
-
-CREATE TABLE IF NOT EXISTS `affiliate_transactions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL DEFAULT '0',
-  `referral` int(11) NOT NULL DEFAULT '0',
-  `commission` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `type` varchar(255) NOT NULL,
-  `date` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `banners`
 --
 
 CREATE TABLE IF NOT EXISTS `banners` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL DEFAULT '0',
   `banner_url` varchar(255) NOT NULL,
   `site_url` varchar(255) NOT NULL,
-  `views` int(11) NOT NULL DEFAULT '0',
-  `clicks` int(11) NOT NULL DEFAULT '0',
+  `views` int(255) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
-  `expiration` int(11) NOT NULL DEFAULT '0',
+  `expiration` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -85,10 +69,10 @@ CREATE TABLE IF NOT EXISTS `banners` (
 --
 
 CREATE TABLE IF NOT EXISTS `ban_reasons` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL DEFAULT '0',
   `reason` text NOT NULL,
-  `date` int(11) NOT NULL DEFAULT '0',
+  `date` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user` (`user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -101,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `ban_reasons` (
 --
 
 CREATE TABLE IF NOT EXISTS `blacklist` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` int(32) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -115,14 +99,14 @@ CREATE TABLE IF NOT EXISTS `blacklist` (
 --
 
 CREATE TABLE IF NOT EXISTS `blog` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `author` int(255) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `views` int(11) NOT NULL DEFAULT '0',
-  `timestamp` int(11) NOT NULL DEFAULT '0',
+  `views` int(255) NOT NULL DEFAULT '0',
+  `timestamp` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -131,11 +115,11 @@ CREATE TABLE IF NOT EXISTS `blog` (
 --
 
 CREATE TABLE IF NOT EXISTS `blog_comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bid` int(11) NOT NULL DEFAULT '0',
-  `author` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `bid` int(255) NOT NULL DEFAULT '0',
+  `author` int(255) NOT NULL DEFAULT '0',
   `comment` text NOT NULL,
-  `timestamp` int(11) NOT NULL DEFAULT '0',
+  `timestamp` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `bid` (`bid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -147,12 +131,12 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
 --
 
 CREATE TABLE IF NOT EXISTS `coins_to_cash` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `user` int(11) NOT NULL,
-  `coins` int(11) NOT NULL DEFAULT '0',
+  `coins` int(255) NOT NULL DEFAULT '0',
   `cash` decimal(10,2) NOT NULL DEFAULT '0.00',
   `conv_rate` int(64) NOT NULL DEFAULT '0',
-  `date` int(11) NOT NULL DEFAULT '0',
+  `date` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -163,13 +147,13 @@ CREATE TABLE IF NOT EXISTS `coins_to_cash` (
 --
 
 CREATE TABLE IF NOT EXISTS `coupons` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `coins` int(11) NOT NULL DEFAULT '0',
+  `coins` int(255) NOT NULL DEFAULT '0',
   `uses` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
-  `used` int(11) NOT NULL DEFAULT '0',
+  `used` int(255) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
-  `exchanges` int(11) NOT NULL DEFAULT '0',
+  `exchanges` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -180,9 +164,9 @@ CREATE TABLE IF NOT EXISTS `coupons` (
 --
 
 CREATE TABLE IF NOT EXISTS `c_pack` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(255) NOT NULL auto_increment,
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `coins` int(11) NOT NULL default '0',
+  `coins` int(255) NOT NULL default '0',
   `price` decimal(10,2) NOT NULL default '0.00',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -194,11 +178,11 @@ CREATE TABLE IF NOT EXISTS `c_pack` (
 --
 
 CREATE TABLE IF NOT EXISTS `c_transfers` (
-  `id` int(11) NOT NULL auto_increment,
-  `receiver` int(11) NOT NULL default '0',
+  `id` int(255) NOT NULL auto_increment,
+  `receiver` int(255) NOT NULL default '0',
   `sender` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `coins` int(11) NOT NULL default '0',
-  `date` int(11) NOT NULL default '0',
+  `coins` int(255) NOT NULL default '0',
+  `date` int(255) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -209,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `c_transfers` (
 --
 
 CREATE TABLE IF NOT EXISTS `faq` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(255) NOT NULL auto_increment,
   `question` varchar(255) NOT NULL,
   `answer` text NOT NULL,
   PRIMARY KEY  (`id`)
@@ -222,9 +206,10 @@ CREATE TABLE IF NOT EXISTS `faq` (
 --
 
 CREATE TABLE IF NOT EXISTS `followed` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
@@ -235,13 +220,13 @@ CREATE TABLE IF NOT EXISTS `followed` (
 
 CREATE TABLE IF NOT EXISTS `google` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL DEFAULT '0',
+  `user` int(255) NOT NULL DEFAULT '0',
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '1',
   `country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -257,13 +242,13 @@ CREATE TABLE IF NOT EXISTS `google` (
 
 CREATE TABLE IF NOT EXISTS `linkedin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `user` int(255) NOT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -278,40 +263,11 @@ CREATE TABLE IF NOT EXISTS `linkedin` (
 --
 
 CREATE TABLE IF NOT EXISTS `linked_done` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `levels`
---
-
-CREATE TABLE IF NOT EXISTS `levels` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `level` int(32) NOT NULL DEFAULT '0',
-  `requirements` int(128) NOT NULL DEFAULT '0',
-  `free_bonus` int(64) NOT NULL DEFAULT '0',
-  `vip_bonus` int(64) NOT NULL DEFAULT '0',
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `requirements` (`requirements`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
-
--- --------------------------------------------------------
-
-INSERT IGNORE INTO `levels` (`id`, `level`, `requirements`, `free_bonus`, `vip_bonus`, `image`) VALUES
-(1, 1, 0, 40, 80, 'files/levels/Level_1.png'),
-(2, 2, 500, 50, 100, 'files/levels/Level_2.png'),
-(3, 3, 2000, 60, 120, 'files/levels/Level_3.png'),
-(4, 4, 5000, 70, 140, 'files/levels/Level_4.png'),
-(5, 5, 10000, 85, 170, 'files/levels/Level_5.png'),
-(6, 6, 20000, 100, 200, 'files/levels/Level_6.png'),
-(7, 7, 35000, 125, 250, 'files/levels/Level_7.png'),
-(8, 8, 60000, 160, 320, 'files/levels/Level_8.png'),
-(9, 9, 100000, 200, 400, 'files/levels/Level_9.png');
 
 -- --------------------------------------------------------
 
@@ -552,11 +508,11 @@ INSERT INTO `list_countries` (`id`, `country`, `code`) VALUES
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `module_session` (
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `page_id` int(11) NOT NULL DEFAULT '0',
-  `ses_key` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(255) NOT NULL DEFAULT '0',
+  `page_id` int(255) NOT NULL DEFAULT '0',
+  `ses_key` int(255) NOT NULL DEFAULT '0',
   `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `timestamp` int(11) NOT NULL DEFAULT '0',
+  `timestamp` int(255) NOT NULL DEFAULT '0',
   UNIQUE KEY `unique_ses` (`user_id`,`page_id`,`module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -567,15 +523,15 @@ CREATE TABLE IF NOT EXISTS `module_session` (
 --
 
 CREATE TABLE IF NOT EXISTS `myspace` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) NOT NULL DEFAULT '0',
@@ -590,9 +546,10 @@ CREATE TABLE IF NOT EXISTS `myspace` (
 --
 
 CREATE TABLE IF NOT EXISTS `myspaced` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -602,7 +559,7 @@ CREATE TABLE IF NOT EXISTS `myspaced` (
 --
 
 CREATE TABLE IF NOT EXISTS `myspace_accounts` (
-  `user` int(11) NOT NULL DEFAULT '0',
+  `user` int(255) NOT NULL DEFAULT '0',
   `account_username` varchar(255) NOT NULL,
   KEY `user` (`user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -614,11 +571,11 @@ CREATE TABLE IF NOT EXISTS `myspace_accounts` (
 --
 
 CREATE TABLE IF NOT EXISTS `payment_proofs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `p_id` int(11) NOT NULL DEFAULT '0',
-  `u_id` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `p_id` int(255) NOT NULL DEFAULT '0',
+  `u_id` int(255) NOT NULL DEFAULT '0',
   `proof` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `proof_date` int(11) NOT NULL DEFAULT '0',
+  `proof_date` int(255) NOT NULL DEFAULT '0',
   `approved` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -630,9 +587,10 @@ CREATE TABLE IF NOT EXISTS `payment_proofs` (
 --
 
 CREATE TABLE IF NOT EXISTS `plused` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
@@ -642,11 +600,11 @@ CREATE TABLE IF NOT EXISTS `plused` (
 --
 
 CREATE TABLE IF NOT EXISTS `p_pack` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `days` int(11) NOT NULL DEFAULT '0',
+  `days` int(255) NOT NULL DEFAULT '0',
   `price` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `coins_price` int(11) NOT NULL DEFAULT '0',
+  `coins_price` int(255) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -658,16 +616,16 @@ CREATE TABLE IF NOT EXISTS `p_pack` (
 --
 
 CREATE TABLE IF NOT EXISTS `reports` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `page_id` int(11) NOT NULL DEFAULT '0',
-  `page_url` varchar(255) NOT NULL DEFAULT '0',
-  `owner_id` int(11) NOT NULL DEFAULT '0',
-  `reported_by` int(11) NOT NULL DEFAULT '0',
-  `reason` varchar(128) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `page_id` int(255) NOT NULL DEFAULT '0',
+  `page_url` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT '0',
+  `owner_id` int(255) NOT NULL DEFAULT '0',
+  `reported_by` int(255) NOT NULL DEFAULT '0',
+  `reason` varchar(128) CHARACTER SET latin1 NOT NULL,
   `count` int(64) NOT NULL DEFAULT '1',
-  `module` varchar(64) NOT NULL,
+  `module` varchar(64) CHARACTER SET latin1 NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
-  `timestamp` int(11) NOT NULL DEFAULT '0',
+  `timestamp` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -678,13 +636,13 @@ CREATE TABLE IF NOT EXISTS `reports` (
 --
 
 CREATE TABLE IF NOT EXISTS `reverbnation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `url` varchar(255) NOT NULL,
-  `artist_id` int(11) NOT NULL,
+  `artist_id` int(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) NOT NULL DEFAULT '0',
@@ -699,9 +657,10 @@ CREATE TABLE IF NOT EXISTS `reverbnation` (
 --
 
 CREATE TABLE IF NOT EXISTS `reverbnation_done` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -711,7 +670,7 @@ CREATE TABLE IF NOT EXISTS `reverbnation_done` (
 --
 
 CREATE TABLE IF NOT EXISTS `reverbnation_accounts` (
-  `user` int(11) NOT NULL DEFAULT '0',
+  `user` int(255) NOT NULL DEFAULT '0',
   `account_name` varchar(255) NOT NULL,
   `account_username` varchar(255) NOT NULL,
   KEY `user` (`user`)
@@ -724,8 +683,8 @@ CREATE TABLE IF NOT EXISTS `reverbnation_accounts` (
 --
 
 CREATE TABLE IF NOT EXISTS `requests` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `paypal` varchar(255) NOT NULL,
   `amount` decimal(5,2) NOT NULL DEFAULT '0.00',
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -744,13 +703,13 @@ CREATE TABLE IF NOT EXISTS `requests` (
 
 CREATE TABLE IF NOT EXISTS `retweet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `user` int(255) NOT NULL,
   `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -765,9 +724,10 @@ CREATE TABLE IF NOT EXISTS `retweet` (
 --
 
 CREATE TABLE IF NOT EXISTS `retweeted` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
@@ -791,9 +751,9 @@ CREATE TABLE IF NOT EXISTS `site_config` (
 --
 
 CREATE TABLE IF NOT EXISTS `scf_done` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  INDEX ( `site_id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -803,16 +763,16 @@ CREATE TABLE IF NOT EXISTS `scf_done` (
 --
 
 CREATE TABLE IF NOT EXISTS `scf` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `s_av` varchar(255) NOT NULL,
-  `s_id` int(11) NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `s_id` int(255) NOT NULL,
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `active` int(11) NOT NULL DEFAULT '0',
   `country` varchar(64) NOT NULL DEFAULT '0',
@@ -829,13 +789,13 @@ CREATE TABLE IF NOT EXISTS `scf` (
 
 CREATE TABLE IF NOT EXISTS `stumble` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `user` int(255) NOT NULL,
   `url` text COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -852,9 +812,10 @@ CREATE TABLE IF NOT EXISTS `stumble` (
 --
 
 CREATE TABLE IF NOT EXISTS `stumbled` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
@@ -864,14 +825,14 @@ CREATE TABLE IF NOT EXISTS `stumbled` (
 --
 
 CREATE TABLE IF NOT EXISTS `surf` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `clicks` int(2) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `confirm` int(11) NOT NULL DEFAULT '0',
@@ -887,9 +848,10 @@ CREATE TABLE IF NOT EXISTS `surf` (
 --
 
 CREATE TABLE IF NOT EXISTS `surfed` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -901,7 +863,7 @@ CREATE TABLE IF NOT EXISTS `surfed` (
 CREATE TABLE IF NOT EXISTS `transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` text COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(255) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
   `money` decimal(10,2) NOT NULL DEFAULT '0.00',
   `gateway` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'paypal',
@@ -920,15 +882,15 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 --
 
 CREATE TABLE IF NOT EXISTS `twitter` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL,
-  `t_id` int(11) NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `t_id` int(255) NOT NULL,
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `active` int(11) NOT NULL DEFAULT '0',
   `country` varchar(64) NOT NULL DEFAULT '0',
@@ -943,9 +905,9 @@ CREATE TABLE IF NOT EXISTS `twitter` (
 --
 
 CREATE TABLE IF NOT EXISTS `used_coupons` (
-  `id` int(11) NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL default '0',
-  `coupon_id` int(11) NOT NULL default '0',
+  `id` int(255) NOT NULL auto_increment,
+  `user_id` int(255) NOT NULL default '0',
+  `coupon_id` int(255) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -956,31 +918,31 @@ CREATE TABLE IF NOT EXISTS `used_coupons` (
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `email` varchar(128) DEFAULT NULL,
   `login` varchar(32) NOT NULL,
   `admin` int(11) NOT NULL DEFAULT '0',
-  `coins` int(11) NOT NULL DEFAULT '0',
+  `coins` int(255) NOT NULL DEFAULT '0',
   `account_balance` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `premium` int(11) NOT NULL DEFAULT '0',
-  `IP` varchar(32) DEFAULT NULL,
+  `premium` int(255) NOT NULL DEFAULT '0',
+  `IP` varchar(32) CHARACTER SET latin1 DEFAULT NULL,
   `log_ip` varchar(32) NOT NULL DEFAULT '0',
   `pass` varchar(32) DEFAULT NULL,
-  `ref` int(11) DEFAULT NULL,
+  `ref` int(255) DEFAULT NULL,
   `ref_paid` int(11) NOT NULL DEFAULT '1',
   `signup` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `online` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `newsletter` int(11) NOT NULL DEFAULT '1',
-  `promote` int(11) NOT NULL DEFAULT '0',
-  `daily_bonus` int(11) NOT NULL DEFAULT '0',
-  `activate` int(11) NOT NULL DEFAULT '0',
+  `promote` int(255) NOT NULL DEFAULT '0',
+  `daily_bonus` int(255) NOT NULL DEFAULT '0',
+  `activate` int(255) NOT NULL DEFAULT '0',
   `banned` int(11) NOT NULL DEFAULT '0',
-  `rec_hash` int(11) NOT NULL DEFAULT '0',
+  `rec_hash` int(255) NOT NULL DEFAULT '0',
   `country` varchar(64) NOT NULL DEFAULT '0',
   `c_changes` int(11) NOT NULL DEFAULT '0',
   `sex` int(11) NOT NULL DEFAULT '0',
-  `warn_message` varchar(255) DEFAULT NULL,
-  `warn_expire` int(11) NOT NULL DEFAULT '0',
+  `warn_message` varchar(255) NOT NULL,
+  `warn_expire` int(255) NOT NULL DEFAULT '0',
   `ref_source` varchar(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `login` (`login`),
@@ -996,8 +958,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `user_clicks` (
   `uid` int(11) NOT NULL DEFAULT '0',
   `module` varchar(64) NOT NULL,
-  `total_clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
+  `total_clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
   UNIQUE KEY `unique_stats` (`module`,`uid`),
   KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1009,12 +971,12 @@ CREATE TABLE IF NOT EXISTS `user_clicks` (
 --
 
 CREATE TABLE IF NOT EXISTS `user_transactions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user_id` int(255) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
-  `value` int(11) NOT NULL DEFAULT '0',
+  `value` int(255) NOT NULL DEFAULT '0',
   `cash` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `date` int(11) NOT NULL DEFAULT '0',
+  `date` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -1025,9 +987,10 @@ CREATE TABLE IF NOT EXISTS `user_transactions` (
 --
 
 CREATE TABLE IF NOT EXISTS `viewed` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
@@ -1037,26 +1000,13 @@ CREATE TABLE IF NOT EXISTS `viewed` (
 --
 
 CREATE TABLE IF NOT EXISTS `web_stats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
   `module_id` varchar(64) NOT NULL,
   `module_name` varchar(64) NOT NULL,
-  `value` int(11) NOT NULL DEFAULT '0',
+  `value` int(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `module_id` (`module_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `wrong_logins`
---
-
-CREATE TABLE IF NOT EXISTS `wrong_logins` (
-  `ip_address` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `count` int(3) NOT NULL DEFAULT '0',
-  `time` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `ip_address` (`ip_address`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1065,14 +1015,14 @@ CREATE TABLE IF NOT EXISTS `wrong_logins` (
 --
 
 CREATE TABLE IF NOT EXISTS `yfav` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) NOT NULL DEFAULT '0',
@@ -1087,9 +1037,10 @@ CREATE TABLE IF NOT EXISTS `yfav` (
 --
 
 CREATE TABLE IF NOT EXISTS `yfaved` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1099,12 +1050,12 @@ CREATE TABLE IF NOT EXISTS `yfaved` (
 --
 
 CREATE TABLE IF NOT EXISTS `yfav_accounts` (
-  `user` int(11) NOT NULL DEFAULT '0',
+  `user` int(255) NOT NULL DEFAULT '0',
   `account_name` varchar(255) NOT NULL,
   `account_id` varchar(255) NOT NULL,
   `fav_id` varchar(255) NOT NULL,
   KEY `user` (`user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1113,14 +1064,14 @@ CREATE TABLE IF NOT EXISTS `yfav_accounts` (
 --
 
 CREATE TABLE IF NOT EXISTS `youtube` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) NOT NULL DEFAULT '0',
@@ -1135,18 +1086,18 @@ CREATE TABLE IF NOT EXISTS `youtube` (
 --
 
 CREATE TABLE IF NOT EXISTS `ysub` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `y_av` varchar(255) NOT NULL,
-  `clicks` int(11) NOT NULL,
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `y_av` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `clicks` int(255) NOT NULL,
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `active` int(11) NOT NULL,
-  `country` varchar(64) NOT NULL DEFAULT '0',
+  `country` varchar(64) CHARACTER SET latin1 NOT NULL DEFAULT '0',
   `sex` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -1158,24 +1109,12 @@ CREATE TABLE IF NOT EXISTS `ysub` (
 --
 
 CREATE TABLE IF NOT EXISTS `ysubed` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ylike_accounts`
---
-
-CREATE TABLE IF NOT EXISTS `ylike_accounts` (
-  `user` int(11) NOT NULL DEFAULT '0',
-  `account_name` varchar(255) NOT NULL,
-  `account_id` varchar(255) NOT NULL,
-  KEY `user` (`user`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1184,14 +1123,14 @@ CREATE TABLE IF NOT EXISTS `ylike_accounts` (
 --
 
 CREATE TABLE IF NOT EXISTS `ylike` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `user` int(255) NOT NULL,
   `url` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `today_clicks` int(11) NOT NULL DEFAULT '0',
-  `max_clicks` int(11) NOT NULL DEFAULT '0',
-  `daily_clicks` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(255) NOT NULL DEFAULT '0',
+  `today_clicks` int(255) NOT NULL DEFAULT '0',
+  `max_clicks` int(255) NOT NULL DEFAULT '0',
+  `daily_clicks` int(255) NOT NULL DEFAULT '0',
   `active` int(11) NOT NULL DEFAULT '0',
   `cpc` int(11) NOT NULL DEFAULT '2',
   `country` varchar(64) NOT NULL DEFAULT '0',
@@ -1206,7 +1145,8 @@ CREATE TABLE IF NOT EXISTS `ylike` (
 --
 
 CREATE TABLE IF NOT EXISTS `yliked` (
-  `user_id` int(11) NOT NULL,
-  `site_id` int(11) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  `user_id` int(255) NOT NULL,
+  `site_id` int(255) NOT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
