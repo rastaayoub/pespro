@@ -1,8 +1,8 @@
 <?php
-/* IF YOU ADD DATABASE SETTINGS MANUALLY, DELETE CODE FROM BELOW */
-if(!defined('INSTALL')){
-	header("Location: /install");
-}
+#/* IF YOU ADD DATABASE SETTINGS MANUALLY, DELETE CODE FROM BELOW */
+#if(!defined('INSTALL')){
+#	header("Location: /install");
+#}
 /* -------------------------------------------------------------- */
 
 $config['sql_host']       = 'remotemysql.com';
