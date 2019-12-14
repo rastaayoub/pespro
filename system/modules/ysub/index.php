@@ -1,4 +1,8 @@
 <?php
+if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
+	include_once(realpath(dirname(__FILE__)).'/db_update.php');
+}
+
 register_filter('index_icons','ysub_icon');
 function ysub_icon($icons) {
 	global $is_online;
@@ -10,12 +14,6 @@ function ysub_icon($icons) {
 	}
 	
 	return $icons;
-}
-            
-register_filter('top_menu_earn','ysub_top_menu');
-function ysub_top_menu($menu) {
-	$selected = (isset($_GET["p"]) && $_GET["p"] == "ysub" ? ' active' : '');
-	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=ysub">Youtube Subscribers</a></div>';
 }
 
 register_filter('site_menu','ysub_site_menu');

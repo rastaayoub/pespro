@@ -32,7 +32,7 @@ if(empty($title) || empty($url)){
 		}else{
 			$db->Query("INSERT INTO `surf` (user, url, title, max_clicks, daily_clicks, cpc, confirm, country, sex) VALUES('".$data['id']."', '".$url."', '".$title."', '".$max_clicks."', '".$daily_clicks."', '".$cpc."', '".($site['surf_type'] == 2 ? 0 : 1)."', '".$country."', '".$gender."') ");
 			if($site['surf_type'] != 2){
-				$sid = mysql_insert_id();
+				$sid = $db->GetLastInsertId();
 				redirect('c_surf.php?id='.$sid);
 			}else{
 				$msg = '<div class="msg"><div class="success">'.$lang['surf_14'].'</div></div>';

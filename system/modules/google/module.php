@@ -10,13 +10,10 @@ $sites = $db->QueryFetchArrayAll("SELECT a.id, a.url, a.title, a.cpc, b.premium 
 if($sites != FALSE){
 ?>
 <script type="text/javascript">
-	var report_msg1 = '<?=mysql_escape_string($lang['b_277'])?>';
-	var report_msg2 = '<?=mysql_escape_string($lang['b_236'])?>';
-	var report_msg3 = '<?=mysql_escape_string($lang['b_237'])?>';
-	var report_msg4 = '<?=mysql_escape_string(lang_rep($lang['b_252'], array('-NUM-' => $site['report_limit'])))?>';
+	var report_msg = '<?=$db->EscapeString($lang['b_277'], 0)?>';
 	var start_click = 1;
 	var end_click = <?=count($sites)?>;
-	eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4 7(a,b,c){8 e=9(f);g(e){$.h({i:"j",5:"k/l.m",n:o,p:"q="+a+"&5="+b+"&r="+c+"&s="+e,t:4(d){u(d){6\'1\':0(v);w(a,\'1\');3;6\'2\':0(x);3;y:0(z);3}}})}}',36,36,'alert|||break|function|url|case|report_page|var|prompt||||||report_msg1|if|ajax|type|POST|system|report|php|cache|false|data|id|module|reason|success|switch|report_msg2|skipElement|report_msg4|default|report_msg3'.split('|'),0,{}))
+	eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 7(a,b,c){8 e=9(f);2(e){$.3({4:"g",5:"h/3.i",j:{a:\'k\',l:a,5:b,m:c,n:e},o:\'p\',6:0(d){2(d.4===\'6\'){q(a,\'1\')}r(d.s)}})}}',29,29,'function||if|ajax|type|url|success|report_page|var|prompt||||||report_msg|POST|system|php|data|reportPage|id|module|reason|dataType|json|skipuser|alert|message'.split('|'),0,{}))
 	eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2 7(){8(9<x){9=9+1}y{z.A(B)}}2 C(b,c){$("#5").3("<6 f=\\"6/g.h\\" /><D>");$.i({j:"k",l:"m/n/o/p.q",r:"E=F&G="+b,s:2(a){$("#5").3(a);d(b);7()}})}2 H(b){8(b.I=="J"){$("#5").3("<6 f=\\"6/g.h\\" />");t c=b.K;8(c.L(c.u-1)=="/"){c=c.M(0,c.u-1)}4=v.w(c).N;t e=$("#"+4+"O").3();$.i({j:"k",l:"m/n/o/p.q",r:"4="+4,P:Q,s:2(a){$("#5").3(a);d(4);7()}})}}2 d(a){v.w(a).R.S="T"}',56,56,'||function|html|id|Hint|img|click_refresh|if|start_click||||remove||src|loader|gif|ajax|type|POST|url|system|modules|google|process|php|data|success|var|length|document|getElementById|end_click|else|location|reload|true|skipElement|br|step|skip|sid|click_callback|state|on|href|charAt|substring|innerHTML|coins|cache|false|style|display|none'.split('|'),0,{}))
 </script>
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>

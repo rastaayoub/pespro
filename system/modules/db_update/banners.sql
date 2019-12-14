@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS `banners` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
-  `user` int(255) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` int(11) NOT NULL DEFAULT '0',
   `banner_url` varchar(255) NOT NULL,
   `site_url` varchar(255) NOT NULL,
-  `views` int(255) NOT NULL DEFAULT '0',
-  `clicks` int(255) NOT NULL DEFAULT '0',
+  `views` int(11) NOT NULL DEFAULT '0',
+  `clicks` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0',
-  `expiration` int(255) NOT NULL DEFAULT '0',
+  `expiration` int(11) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `expiration` (`expiration`),
@@ -14,10 +14,10 @@ CREATE TABLE IF NOT EXISTS `banners` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `ad_packs` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `price` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `days` int(255) NOT NULL DEFAULT '0',
-  `bought` int(255) NOT NULL DEFAULT '0',
+  `days` int(11) NOT NULL DEFAULT '0',
+  `bought` int(11) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

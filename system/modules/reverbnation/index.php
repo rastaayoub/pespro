@@ -16,7 +16,7 @@ function reverbnation_icon($icons) {
 	return $icons;
 }
 
-register_filter('top_menu_earn','reverbnation_top_menu');
+register_filter('exchange_menu','reverbnation_top_menu');
 function reverbnation_top_menu($menu) {
 	$selected = (isset($_GET["p"]) && $_GET["p"] == "reverbnation" ? ' active' : '');
 	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=reverbnation">Reverbnation Fans</a></div>';

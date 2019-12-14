@@ -1,4 +1,10 @@
 <?php
+// This module was disabled due to latest Google updates
+
+/*if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
+	include_once(realpath(dirname(__FILE__)).'/db_update.php');
+}
+
 register_filter('index_icons','ggl_icon');
 function ggl_icon($icons) {
 	global $is_online;
@@ -12,7 +18,7 @@ function ggl_icon($icons) {
 	return $icons;
 }
        
-register_filter('top_menu_earn','ggl_top_menu');
+register_filter('exchange_menu','ggl_top_menu');
 function ggl_top_menu($menu) {
 	$selected = (isset($_GET["p"]) && $_GET["p"] == "google" ? ' active' : '');
 	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=google">Google +1</a></div>';
@@ -108,5 +114,5 @@ function ggl_admin_clicks($stats) {
 register_filter('admin_s_menu','ggl_admin_menu');
 function ggl_admin_menu($menu) {
 	return $menu . '<li><a href="index.php?x=sites&s=google">Google</a></li>';
-}
+}*/
 ?>

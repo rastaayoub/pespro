@@ -9,7 +9,7 @@ function soundcloud_settings($settings)
 	global $site;
     return $settings .'<div class="row">
 						<label><strong>Soundcloud Client ID</strong><small>(<a href="http://soundcloud.com/you/apps" target="_blank">click here</a>)</small></label>
-						<div><input type="text" name="set2[scf_api]" value="'.$site['scf_api'].'" required="required" /></div>
+						<div><input type="text" name="set[scf_api]" value="'.$site['scf_api'].'" required="required" /></div>
 					</div>';
 }
 
@@ -26,10 +26,14 @@ function soundcloud_icon($icons) {
 	return $icons;
 }
 
-register_filter('top_menu_earn','soundcloud_top_menu');
+register_filter('exchange_menu','soundcloud_top_menu');
 function soundcloud_top_menu($menu) {
-	$selected = (isset($_GET["p"]) && $_GET["p"] == "soundcloud" ? ' active' : '');
-	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=soundcloud">Soundcloud Followers</a></div>';
+	$selected = (isset($_GET["p"]) && $_GET["p"] == "soundcloud" || isset($_GET['p']) && $_GET['p'] == 'soundcloud_likes' ? ' active' : '');
+	return $menu . '<div class="ucp_link'.$selected.'" onclick="openMenu(\'soundcloudMenu\'); $(this).find(\'span\').toggleClass(\'expanded\'); return false;">Soundcloud <span class="collapsed"></span></div>
+				<div id="soundcloudMenu" class="subMenu">
+					<a href="p.php?p=soundcloud">Soundcloud Followers</a>
+					<a href="p.php?p=soundcloud_likes">Soundcloud Likes</a>
+				</div>';
 }
 
 register_filter('site_menu','soundcloud_site_menu');

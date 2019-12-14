@@ -1,7 +1,11 @@
-<?if(! defined('BASEPATH') ){ exit('Unable to view file.'); }
-if($site['surf_type'] == 0){
+<?php
+if(! defined('BASEPATH') ){ exit('Unable to view file.'); }
+
+$surfType = ($data['premium'] > 0 && isset($site['vip_surf_type']) ? $site['vip_surf_type'] : $site['surf_type']);
+
+if($surfType == 0){
 	redirect('index.php');
-}elseif($site['surf_type'] == 2){
+}elseif($surfType == 2){
 	if($site['target_system'] != 2){
 		$dbt_value = " AND (a.country = '0' OR FIND_IN_SET('".$data['country']."', a.country)) AND (a.sex = '".$data['sex']."' OR a.sex = '0')";
 	}
@@ -11,18 +15,15 @@ if($check['total'] == 0){
 }else{
 ?>
 <script type="text/javascript">
-var msg1 = '<?=mysql_escape_string($lang['surf_09'])?>';
-var msg2 = '<?=mysql_escape_string($lang['surf_10'])?>';
-var msg3 = '<?=mysql_escape_string($lang['surf_11'])?>';
-var msg4 = '<?=mysql_escape_string($lang['b_163'])?>';
-var msg5 = '<?=mysql_escape_string($lang['surf_12'])?>';
-var msg6 = '<?=mysql_escape_string($lang['b_156'])?>';
-var report_msg1 = '<?=mysql_escape_string($lang['b_277'])?>';
-var report_msg2 = '<?=mysql_escape_string($lang['b_236'])?>';
-var report_msg3 = '<?=mysql_escape_string($lang['b_237'])?>';
-var report_msg4 = '<?=mysql_escape_string(lang_rep($lang['b_252'], array('-NUM-' => $site['report_limit'])))?>';
+var msg1 = '<?=$db->EscapeString($lang['surf_09'])?>';
+var msg2 = '<?=$db->EscapeString($lang['surf_10'])?>';
+var msg3 = '<?=$db->EscapeString($lang['surf_11'])?>';
+var msg4 = '<?=$db->EscapeString($lang['b_163'])?>';
+var msg5 = '<?=$db->EscapeString($lang['surf_12'])?>';
+var msg6 = '<?=$db->EscapeString($lang['b_156'])?>';
+var report_msg = '<?=$db->EscapeString($lang['b_277'], 0)?>';
 var hideref = '<?=hideref('', $site['hideref'], ($site['revshare_api'] != '' ? $site['revshare_api'] : 0))?>';
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('7 5;7 1h=(f.i/2)-(f.i/4);7 13=(f.r/2)-(f.r/4);7 H=\'2b=h,2a=h,25=h,20=h,1X=h,1W=W,1V=W,1U=h,i=\'+f.i/2+\',r=\'+f.r/2+\',1T=\'+13+\',1S=\'+1h;3 1R(){9(5){1c()}s{M();u()}}3 M(){5=P.Q(\'1Q:1P\',"U",H);B()}3 B(){9(!5||5.C){}s{$.D({E:"F",g:"L/17/I/18.J",K:m,v:"1O=1",x:3(a){S(a){z\'1M\':V();j;X:7 b=1L.1J(a);7 c=1E+b[\'g\'];5=P.Q(c,"U",H);12(b[\'G\'],b[\'14\']);$(\'#p\').16();$(\'#p\').8(\'<6 T="1B:#1z;1x:1v 1s;1e:#1f;i:1p;1o:1n;1j-1N:1m"><1k 1i="y">\'+b[\'14\']+\'</1k> <a 1g="\'+b[\'g\']+\'" 1q="1r" T="1e:#1f"><b>\'+b[\'1d\']+\'</b></a> <a 1g="1t:1u(0);" 1w="1b(\\\'\'+b[\'G\']+\'\\\',\\\'\'+b[\'1y\']+\'\\\',\\\'I\\\');"><1a 1A="1a/19.1C" 1D="11" 1d="11" 1j="0" /></a><1F />\'+1G+\' \'+b[\'1H\']+\' \'+1I+\'</6>\');j}}});$(\'#n\').8(1K)}}7 t;3 12(b,c){t=A(3(){$.D({E:"F",g:"L/17/I/18.J",K:m,v:"1l=1&G="+b,x:3(a){B()}})},(c*O));k((c-1),1)}3 q(){k(0,0);t=15(t);5=m}7 l;3 k(a,b){9(a>0){$(\'#y\').8(a);l=A(\'k(\'+(a-1)+\', 1);\',O)}s{$(\'#y\').8(\'0\')}9(b==0){l=15(l)}}3 V(){5.10();$(\'#p\').Z();$(\'#n\').Z();$(\'#Y\').16();$(\'#Y\').8(\'<6 o="R"><6 o="1Y">\'+1Z+\'</6></6>\');q()}3 1c(){9(5){5.10();$(\'#n\').8(N);q()}}3 u(){9(!5||5.C||5.C==\'21\'){$(\'#p\').8(\'<6 o="R"><6 o="22">\'+23+\'</6></6>\');$(\'#n\').8(N);q()}s{A(3(){u()},24)}}3 1b(a,b,c){7 e=26(27);9(e){$.D({E:"F",g:"L/19.J",K:m,v:"1i="+a+"&g="+b+"&28="+c+"&29="+e,x:3(d){S(d){z\'1\':w(2c);2d(a,\'1\');j;z\'2\':w(2e);j;X:w(2f);j}}})}}',62,140,'|||function||surfWindow|div|var|html|if||||||screen|url|no|width|break|displayCountdown|exe_cd|false|surfButton|class|surfInfo|stopExec|height|else|exe_count|checkWin|data|alert|success|countDown|case|setTimeout|openWin|closed|ajax|type|POST|sid|surfWindowParams|surf|php|cache|system|emptyWindow|msg2|1000|window|open|msg|switch|style|TrafficExchange|noSites|yes|default|surfHint|hide|close|Report|startExec|aTop|time|clearTimeout|show|modules|process|report|img|report_page|closeWin|title|color|171717|href|aLeft|id|border|span|complete|3px|4px|padding|280px|target|_blank|auto|javascript|void|2px|onclick|margin|eurl|efefef|src|background|png|alt|hideref|br|msg1|cpc|msg6|parseJSON|msg3|jQuery|NO_SITE|radius|get|blank|about|startSurf|left|top|copyhistory|resizable|scrollbars|menubar|info|msg4|status|undefined|error|msg5|200|directories|prompt|report_msg1|module|reason|location|toolbar|report_msg2|skipuser|report_msg4|report_msg3'.split('|'),0,{}))
+eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('6 5;6 J=(f.i/2)-(f.i/4);6 K=(f.k/2)-(f.k/4);6 L=\'1k=g,v=g,1l=g,1m=g,1n=g,1o=M,1p=M,1q=g,i=\'+f.i/2+\',k=\'+f.k/2+\',1r=\'+K+\',1s=\'+J;3 1t(){8(5){N()}j{O();w()}}3 O(){5=1u.1v(\'P:Q\',\'1w\'+R.1x(R.1y()*1z),L);x()}3 x(){8(!5||5.y){}j{$.l({m:"z",h:"A/S/B/T.C",U:D,E:"1A=1",n:3(a){1B(a){1C\'1D\':V();W;1E:6 b=1F.1G(a);8(F!=\'\'){6 c=F+b[\'X\']}j{6 c=F+b[\'h\']}5.v.Y(c);Z(b[\'G\'],b[\'10\']);$(\'#o\').11();$(\'#o\').9(\'<7 12="1H:#1I;1J:1K 1L;13:#14;i:1M;1N:1O;15-1P:1Q"><16 17="H">\'+b[\'10\']+\'</16> <a 18="\'+b[\'h\']+\'" 1R="1S" 12="13:#14"><b>\'+b[\'19\']+\'</b></a> <a 18="1T:1U(0);" 1V="1a(\\\'\'+b[\'G\']+\'\\\',\\\'\'+b[\'X\']+\'\\\',\\\'B\\\');"><1b 1W="1b/1X.1Y" 1Z="1c" 19="1c" 15="0" /></a><20 />\'+21+\' \'+b[\'22\']+\' \'+23+\'</7>\');W}}});$(\'#p\').9(24)}}6 q;3 Z(b,c){q=I(3(){5.v.Y(\'P:Q\');$.l({m:"z",h:"A/S/B/T.C",U:D,E:"25=1&G="+b,n:3(a){x()}})},(c*1d));r((c-1),1)}3 s(){r(0,0);q=1e(q);5=D}6 t;3 r(a,b){8(a>0){$(\'#H\').9(a);t=I(\'r(\'+(a-1)+\', 1);\',1d)}j{$(\'#H\').9(\'0\')}8(b==0){t=1e(t)}}3 V(){5.1f();$(\'#o\').1g();$(\'#p\').1g();$(\'#1h\').11();$(\'#1h\').9(\'<7 u="1i"><7 u="26">\'+27+\'</7></7>\');s()}3 N(){8(5){5.1f();$(\'#p\').9(1j);s()}}3 w(){8(!5||5.y||5.y==\'28\'){$(\'#o\').9(\'<7 u="1i"><7 u="29">\'+2a+\'</7></7>\');$(\'#p\').9(1j);s()}j{I(3(){w()},2b)}}3 1a(a,b,c){6 e=2c(2d);8(e){$.l({m:"z",h:"A/l.C",E:{a:\'2e\',17:a,h:b,2f:c,2g:e},2h:\'2i\',n:3(d){8(d.m===\'n\'){2j(a,\'1\')}2k(d.2l)}})}}',62,146,'|||function||surfWindow|var|div|if|html||||||screen|no|url|width|else|height|ajax|type|success|surfInfo|surfButton|exe_count|displayCountdown|stopExec|exe_cd|class|location|checkWin|openWin|closed|POST|system|surf|php|false|data|hideref|sid|countDown|setTimeout|aLeft|aTop|surfWindowParams|yes|closeWin|emptyWindow|about|blank|Math|modules|process|cache|noSites|break|eurl|replace|startExec|time|show|style|color|171717|border|span|id|href|title|report_page|img|Report|1000|clearTimeout|close|hide|surfHint|msg|msg2|toolbar|directories|status|menubar|scrollbars|resizable|copyhistory|top|left|startSurf|window|open|pespro_|floor|random|1e10|get|switch|case|NO_SITE|default|jQuery|parseJSON|background|efefef|margin|2px|auto|280px|padding|4px|radius|3px|target|_blank|javascript|void|onclick|src|report|png|alt|br|msg1|cpc|msg6|msg3|complete|info|msg4|undefined|error|msg5|500|prompt|report_msg|reportPage|module|reason|dataType|json|skipuser|alert|message'.split('|'),0,{}))
 </script>
 <h2 class="title"><?=$lang['b_162']?> - Traffic Exchange</h2>
 <div class="infobox"><?=$lang['surf_13']?></div><br />
@@ -40,14 +41,11 @@ $sites = $db->QueryFetchArrayAll("SELECT a.id, a.url, a.title, a.cpc, b.premium 
 if($sites){
 ?>
 <script type="text/javascript">
-	var report_msg1 = '<?=mysql_escape_string($lang['b_277'])?>';
-	var report_msg2 = '<?=mysql_escape_string($lang['b_236'])?>';
-	var report_msg3 = '<?=mysql_escape_string($lang['b_237'])?>';
-	var report_msg4 = '<?=mysql_escape_string(lang_rep($lang['b_252'], array('-NUM-' => $site['report_limit'])))?>';
+	var report_msg = '<?=$db->EscapeString($lang['b_277'], 0)?>';
 	var base = '<?=$site['site_url']?>';
 	var start_click = 1;
 	var end_click = <?=count($sites)?>;
-	eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4 7(a,b,c){8 e=9(f);g(e){$.h({i:"j",5:"k/l.m",n:o,p:"q="+a+"&5="+b+"&r="+c+"&s="+e,t:4(d){u(d){6\'1\':0(v);w(a,\'1\');3;6\'2\':0(x);3;y:0(z);3}}})}}',36,36,'alert|||break|function|url|case|report_page|var|prompt||||||report_msg1|if|ajax|type|POST|system|report|php|cache|false|data|id|module|reason|success|switch|report_msg2|skipuser|report_msg4|default|report_msg3'.split('|'),0,{}))
+	eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 7(a,b,c){8 e=9(f);2(e){$.3({4:"g",5:"h/3.i",j:{a:\'k\',l:a,5:b,m:c,n:e},o:\'p\',6:0(d){2(d.4===\'6\'){q(a,\'1\')}r(d.s)}})}}',29,29,'function||if|ajax|type|url|success|report_page|var|prompt||||||report_msg|POST|system|php|data|reportPage|id|module|reason|dataType|json|skipuser|alert|message'.split('|'),0,{}))
 	eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 8(){o(4<p){4=4+1}q{r.s(t)}}3 u(a){v=w(x+"/9.c?y="+a+"&z="+A.B(),"C");5(a)}3 D(b){d.e("6").f.g="E";$("#6").h("<i F=\\"2\\" G=\\"0\\" H=\\"I\\" J=\\"7\\" K=\\"L\\"><j><k><7><l M=2><b>N... <m O=\\"m/n-P.Q\\"></b></l></7></k></j></i><R>");$.n({S:"T",U:"V/W/9/X.c?Y=Z",10:"11="+b,12:3(a){$("#6").h(a)}});5(b)}3 5(a){d.e(a).f.g="13";8()}',62,66,'|||function|start_click|remove|txtHint|center|click_refresh|surf|||php|document|getElementById|style|display|html|table|tr|td|font|img|ajax|if|end_click|else|location|reload|true|opensite|childWindow|open|base|sid|rand|Math|random|View|skipuser|block|cellpadding|cellspacing|width|500|align|class|maintable|size|Skipping|src|loader|gif|br|type|GET|url|system|modules|process|step|skip|data|id|success|none'.split('|'),0,{}))
 </script>
 <div id="txtHint" style="display:none;"></div>
@@ -59,7 +57,7 @@ if($sites){
 	<center>
 		<?=truncate($sit['title'], 11)?><br /><br /><b><?=$lang['b_42']?></b>: <?=($sit['cpc']-1)?><br>
 		<a href="javascript:void(0);" onclick="opensite('<?=$sit['id']?>');" class="followbutton"><?=$lang['surf_04']?></a>
-		<font style="font-size:0.8em;">[<a href="javascript:void(0);" onclick="skipuser('<?=$sit['id']?>');" style="color: #999999;font-size:0.9em;"><?=$lang['surf_05']?></a>]</font>
+		<font style="font-size:0.8em;">[<a href="javascript:void(0);" onclick="skipuser('<?=$sit['id']?>');" style="color: #999999;font-size:0.9em;"><?=$lang['b_360']?></a>]</font>
 		<span style="position:absolute;bottom:1px;right:2px;"><a href="javascript:void(0);" onclick="report_page('<?=$sit['id']?>','<?=base64_encode($sit['url'])?>','surf');"><img src="img/report.png" alt="Report" title="Report" border="0" /></a></span>
 	</center>
 </div>

@@ -7,7 +7,7 @@ if(isset($_POST['step']) && $_POST['step'] == "skip" && is_numeric($_POST['sid']
 	$id = $db->EscapeString($_POST['sid']);
 	if($db->QueryGetNumRows("SELECT site_id FROM `plused` WHERE `user_id`='".$data['id']."' AND `site_id`='".$id."'") == 0){
 		$db->Query("INSERT INTO `plused` (user_id, site_id) VALUES('".$data['id']."', '".$id."')");
-		echo '<div class="msg"><div class="info">'.$lang['gp_02'].'</div></div>';
+		echo '<div class="msg"><div class="info">'.$lang['b_359'].'</div></div>';
 	}
 }
 
@@ -26,7 +26,7 @@ if(isset($_POST['id'])){
 			$db->Query("INSERT INTO `plused` (user_id, site_id) VALUES('".$data['id']."','".$sit['id']."')");
 			$db->Query("INSERT INTO `user_clicks` (`uid`,`module`,`total_clicks`,`today_clicks`)VALUES('".$data['id']."','google','1','1') ON DUPLICATE KEY UPDATE `total_clicks`=`total_clicks`+'1', `today_clicks`=`today_clicks`+'1'");
 
-			echo '<div class="msg"><div class="success">'.lang_rep($lang['gp_03'], array('-NUM-' => ($sit['cpc']-1))).'</div></div>';
+			echo '<div class="msg"><div class="success">'.lang_rep($lang['b_358'], array('-NUM-' => ($sit['cpc']-1))).'</div></div>';
 		}else{
 			echo '<div class="msg"><div class="error">'.$lang['b_300'].'</div></div>';
 		}

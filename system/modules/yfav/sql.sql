@@ -14,8 +14,7 @@ CREATE TABLE IF NOT EXISTS `yfav` (
 CREATE TABLE IF NOT EXISTS `yfaved` (
   `user_id` int(255) NOT NULL,
   `site_id` int(255) NOT NULL,
-  KEY `user_id` (`user_id`),
-  KEY `site_id` (`site_id`)
+  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `yfav_accounts` (

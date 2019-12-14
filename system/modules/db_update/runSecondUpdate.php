@@ -1,4 +1,7 @@
 <?php
+// Update to 2.0.5
+$db->Query("UPDATE `site_config` SET `config_value`='1' WHERE `config_name`='hideref'");
+
 // Update to 2.0.0
 $tables = hook_filter('module_tables','');
 $tables = explode('(||)', $tables);

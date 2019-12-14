@@ -1,4 +1,8 @@
 <?php
+if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
+	include_once(realpath(dirname(__FILE__)).'/db_update.php');
+}
+
 register_filter('index_icons','yt_icon');
 function yt_icon($icons) {
 	global $is_online;
@@ -12,10 +16,16 @@ function yt_icon($icons) {
 	return $icons;
 }
             
-register_filter('top_menu_earn','yt_top_menu');
+register_filter('exchange_menu','yt_top_menu');
 function yt_top_menu($menu) {
 	$selected = (isset($_GET["p"]) && $_GET["p"] == "youtube" ? ' active' : '');
-	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=youtube">Youtube Views</a></div>';
+	return $menu . '<div class="ucp_link'.$selected.'" onclick="openMenu(\'youtubeMenu\'); $(this).find(\'span\').toggleClass(\'expanded\'); return false;">Youtube <span class="collapsed"></span></div>
+			<div id="youtubeMenu" class="subMenu">
+				<a href="p.php?p=youtube">Youtube Views</a>
+				<a href="p.php?p=ylike">Youtube Likes</a>
+				<a href="p.php?p=ysub">Youtube Subscribers</a>
+				<a href="p.php?p=yfav">Youtube Favorites</a>
+			</div>';
 }
 
 register_filter('site_menu','yt_site_menu');

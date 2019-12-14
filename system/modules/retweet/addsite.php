@@ -11,10 +11,10 @@ if(empty($title) || empty($url)){
 	$msg = '<div class="msg"><div class="error">'.lang_rep($lang['b_296'], array('-URL-' => $url)).'</div></div>';
 }else{
 	if($db->QueryGetNumRows("SELECT * FROM `retweet` WHERE `url`='".$url."' AND `user`='".$data['id']."' LIMIT 1") > 0){
-		$msg = '<div class="msg"><div class="error">'.$lang['retwt_02'].'</div></div>';
+		$msg = '<div class="msg"><div class="error">'.$lang['twitter_02'].'</div></div>';
 	}else{
 		$db->Query("INSERT INTO `retweet` (user, url, title, max_clicks, daily_clicks, cpc, country, sex) VALUES('".$data['id']."', '".$url."', '".$title."', '".$max_clicks."', '".$daily_clicks."', '".$cpc."', '".$country."', '".$gender."')");
-		$msg = '<div class="msg"><div class="success">'.$lang['retwt_01'].'</div></div>';
+		$msg = '<div class="msg"><div class="success">'.$lang['twitter_01'].'</div></div>';
 		$error = 0;
 	}
 }
