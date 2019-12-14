@@ -63,6 +63,7 @@ if ($step == 0)
 			} elseif ($license_check == "VALID") 
 			{
 				$licenseFile = $sree->generateLicense(MD5($mn_key), $mn_oid, $http_host);
+				echo $licenseFile;
 				$successTxt = "<p class=\"errsuccess\">Licence successfully saved!</p>";
 				$sree->setSession("successTxt", $successTxt);
 				$sree->setSession("licenseFile", $licenseFile);
