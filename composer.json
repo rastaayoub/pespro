@@ -4,8 +4,8 @@
   },
   "scripts": {
     "compile": [
-      "chmod 777 app/system/database.php",
-	  "chmod 777 app/files/banners"
+      "chmod 777 system/database.php",
+	  "chmod 777 files/banners"
     ]
   }
 }
