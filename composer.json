@@ -1,11 +1,6 @@
 {
   "require": {
     "ext-gd": "*"
-  },
-  "scripts": {
-    "compile": [
-      "chmod 777 system/database.php",
-	  "chmod 777 files/banners"
-    ]
   }
+  
 }
