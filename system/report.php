@@ -1,4 +1,4 @@
-<?php
+<?
 define('BASEPATH', true);
 include('config.php');
 if(!$is_online){exit;}

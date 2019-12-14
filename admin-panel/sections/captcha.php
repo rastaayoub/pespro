@@ -48,11 +48,11 @@ if(isset($_POST['edit_captcha'])){
 				</div>
 				<span id="reCaptcha"<?=($site['captcha_sys'] == 1 ? '' : ' style="display:none"')?>>
 					<div class="row">
-						<label><strong>ReCaptcha Site Key</strong></label>
+						<label><strong>ReCaptcha Public Key</strong></label>
 						<div><input type="text" name="set[recaptcha_pub]" value="<?=$site['recaptcha_pub']?>" /></div>
 					</div>
 					<div class="row">
-						<label><strong>ReCaptcha Secret Key</strong></label>
+						<label><strong>ReCaptcha Private Key</strong></label>
 						<div><input type="text" name="set[recaptcha_sec]" value="<?=$site['recaptcha_sec']?>" /></div>
 					</div>
 				</span>
@@ -85,9 +85,9 @@ if(isset($_POST['edit_captcha'])){
 			</div>
 			<div class="content">
 				<p><strong>ReCaptcha</strong></p>
-				<p><b>1)</b> <a href="https://www.google.com/recaptcha/admin/create" target="_blank">Click Here</a>, go down on the page and register your website</p>
-				<p><b>2)</b> Copy generated "Site Key" and paste this key on "ReCaptcha Public Key"</p>
-				<p><b>3)</b> Copy generated "Secret Key" and paste this key on "ReCaptcha Private Key"</p>
+				<p><b>1)</b> <a href="https://www.google.com/recaptcha/admin/create" target="_blank">Click Here</a>, complete on "Domain" with your domain name and click on "Create Key"</p>
+				<p><b>2)</b> Copy generated "Public Key" and paste this key on "ReCaptcha Public Key"</p>
+				<p><b>3)</b> Copy generated "Private Key" and paste this key on "ReCaptcha Private Key"</p>
 				<p><b>4)</b> Press on "Submit" and you're done</p><br />
 				<p><strong>SolveMedia</strong></p>
 				<p><b>1)</b> <a href="https://portal.solvemedia.com/portal/public/signup" target="_blank">Click Here</a>, complete required info and join on this website</p>

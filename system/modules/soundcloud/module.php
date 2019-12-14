@@ -12,12 +12,23 @@ if($site['scf_api'] == ''){
 	echo ($data['admin'] > 0 ? '<div class="msg"><div class="error"><a href="admin-panel/index.php?x=settings">To enable this module you have to add Soundcloud customer key on Admin -> Settings!</a></div></div>' :'<div class="msg"><div class="error">This section is currently unavailable!</div></div>');
 }elseif($sites){
 ?>
+<p class="infobox"><?=$lang['scf_11']?></p>
 <script type="text/javascript">
-	var report_msg = '<?=$db->EscapeString($lang['b_277'], 0)?>';
+	msg1 = '<?=mysql_escape_string($lang['scf_16'])?>';
+	msg2 = '<?=mysql_escape_string($lang['scf_17'])?>';
+	msg3 = '<?=mysql_escape_string($lang['scf_18'])?>';
+	msg4 = '<?=mysql_escape_string($lang['scf_19'])?>';
+	msg5 = '<?=mysql_escape_string($lang['scf_20'])?>';
+	msg6 = '<?=mysql_escape_string($lang['b_300'])?>';
+	var report_msg1 = '<?=mysql_escape_string($lang['b_277'])?>';
+	var report_msg2 = '<?=mysql_escape_string($lang['b_236'])?>';
+	var report_msg3 = '<?=mysql_escape_string($lang['b_237'])?>';
+	var report_msg4 = '<?=mysql_escape_string(lang_rep($lang['b_252'], array('-NUM-' => $site['report_limit'])))?>';
+	var hideref = '<?=hideref('', $site['hideref'], ($site['revshare_api'] != '' ? $site['revshare_api'] : 0))?>';
 	var start_click = 1;
 	var end_click = <?=count($sites)?>;
-	eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 7(a,b,c){8 e=9(f);2(e){$.3({4:"g",5:"h/3.i",j:{a:\'k\',l:a,5:b,m:c,n:e},o:\'p\',6:0(d){2(d.4===\'6\'){q(a,\'1\')}r(d.s)}})}}',29,29,'function||if|ajax|type|url|success|report_page|var|prompt||||||report_msg|POST|system|php|data|reportPage|id|module|reason|dataType|json|skipuser|alert|message'.split('|'),0,{}))
-	eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 r(){n(s<T){s=s+1}U{H.V(W)}}0 X(b,d){$("#5").6("<7 t=\\"7/u.v\\" /><w>");$.x({i:"y",z:"A/B/C/D.E",F:"Y=Z&10="+b,l:0(a){$("#5").6(a);o(b);r()}})}m 8;0 G(a,b){11 12(13.14()*(b-a)+a).15(2)}0 16(d,e,f){n(!8||8.I){$("#5").6("<7 t=\\"7/u.v\\" /><w>");m j=(g.p/1.9)-(g.p/G(3,4));m k=(g.q/1.9)-(g.q/G(3,4));$.x({i:"y",z:"A/B/C/D.E",F:{17:1,18:d},J:\'K\',l:0(a){n(a.i===\'l\'){m b=L(0(){8.19()},1a);m c=1b(0(){n(8.I){M(c);M(b);$("#5").6("<7 t=\\"7/u.v\\" /><w>");L(0(){N(d)},O)}},O)}$("#5").6(a.P)}});8=1c.1d(e,f,"1e=h, H=h, 1f=h, 1g=h, 1h=h, 1i=Q, 1j=Q, 1k=h, p="+g.p/1.9+", q="+g.q/1.9+", 1l="+k+", 1m="+j)}}0 N(b){$.x({i:"y",z:"A/B/C/D.E",F:{1n:b},J:\'K\',l:0(a){1o(a.i){R\'l\':o(b);r();S;R\'1p\':o(b);S}$("#5").6(a.P)}})}0 o(a){$(\'#\'+a).1q()}',62,89,'function|||||Hint|html|img|targetWin||||||||screen|no|type|||success|var|if|remove|width|height|click_refresh|start_click|src|loader|gif|br|ajax|POST|url|system|modules|soundcloud|process|php|data|getRandomPosition|location|closed|dataType|json|setTimeout|clearTimeout|do_click|500|message|yes|case|break|end_click|else|reload|true|skipuser|step|skip|sid|return|parseFloat|Math|random|toFixed|ModulePopup|get|pid|close|30000|setInterval|window|open|toolbar|directories|status|menubar|scrollbars|resizable|copyhistory|top|left|id|switch|not_available|hide'.split('|'),0,{}))
+	eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4 7(a,b,c){8 e=9(f);g(e){$.h({i:"j",5:"k/l.m",n:o,p:"q="+a+"&5="+b+"&r="+c+"&s="+e,t:4(d){u(d){6\'1\':0(v);w(a,\'1\');3;6\'2\':0(x);3;y:0(z);3}}})}}',36,36,'alert|||break|function|url|case|report_page|var|prompt||||||report_msg1|if|ajax|type|POST|system|report|php|cache|false|data|id|module|reason|success|switch|report_msg2|skipuser|report_msg4|default|report_msg3'.split('|'),0,{}))
+	eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 w(){q(x<U){x=x+1}y{O.V(W)}}3 X(b,d){$("#7").8("<9 z=\\"9/A.B\\" /><C>");$.D({E:"F",G:"H/I/r/J.K",L:"Y=Z&10="+b,s:3(a){$("#7").8(a);t(b);w()}})}h m;3 11(d,e,f,g,i){q(m&&!m.P){}y{h j=(n.u/2)-(n.u/4);h k=(n.v/2)-(n.v/4);h l=12+"13://r.14/"+e;$("#7").8("<9 z=\\"9/A.B\\" /><C>");$.D({E:"F",G:"H/I/r/J.K",L:"15=1&16="+d,s:3(a){q(!17(a)){$("#7").8("<0 6=\\"p\\"><0 6=\\"18\\">"+19+"</0></0>");h b=1a(3(){m.1b()},1c);h c=1d(3(){q(m.P){Q(c);Q(b);R(d,g,i)}},1e)}y{$("#7").8("<0 6=\\"p\\"><0 6=\\"M\\">"+1f+"</0></0>")}}});m=1g.1h(l,f,"1i=o, O=o, 1j=o, 1k=o, 1l=o, 1m=S, 1n=S, 1o=o, u="+n.u/2+", v="+n.v/2+", 1p="+k+", 1q="+j)}}3 R(b,c,e){$("#7").8("<9 z=\\"9/A.B\\" /><C>");$.D({E:"F",G:"H/I/r/J.K",1r:1s,L:"1t="+b,s:3(a){1u(a){T\'1\':$("#7").8("<0 6=\\"p\\"><0 6=\\"s\\">"+1v+" <b>"+c+"</b>"+1w+"</0></0>");t(b);w();N;T\'5\':$("#7").8("<0 6=\\"p\\"><0 6=\\"M\\">"+1x+"</0></0>");t(b);N;1y:$("#7").8("<0 6=\\"p\\"><0 6=\\"M\\">"+1z+"</0></0>");N}}})}3 t(a){1A.1B(a).1C.1D="1E"}',62,103,'div|||function|||class|Hint|html|img||||||||var|||||targetWin|screen|no|msg|if|soundcloud|success|remove|width|height|click_refresh|start_click|else|src|loader|gif|br|ajax|type|POST|url|system|modules|process|php|data|error|break|location|closed|clearTimeout|do_click|yes|case|end_click|reload|true|skipuser|step|skip|sid|ModulePopup|hideref|http|com|get|pid|isNaN|info|msg1|setTimeout|close|20000|setInterval|1000|msg2|window|open|toolbar|directories|status|menubar|scrollbars|resizable|copyhistory|top|left|cache|false|id|switch|msg4|msg5|msg6|default|msg3|document|getElementById|style|display|none'.split('|'),0,{}))
 </script>
 <div id="Hint"></div>
 <div id="getpoints">
@@ -27,8 +38,8 @@ if($site['scf_api'] == ''){
 <div class="follow<?=($sit['premium'] > 0 ? '_vip' : '')?>" id="<?=$sit['id']?>">
 	<center>
 		<img src="<?=$sit['s_av']?>" border="0" alt="@<?=$sit['url']?>" title="@<?=$sit['url']?>" width="48" height="48" class="follower"><br><b><?=$lang['b_42']?></b>: <?=($sit['cpc']-1)?><br>
-		<a href="javascript:void(0);" onclick="ModulePopup('<?=$sit['id']?>','<?=hideref('http://soundcloud.com/'.$sit['url'])?>','Soundcloud');" class="followbutton"><?=$lang['scf_12']?></a>
-		<font style="font-size:0.8em;">[<a href="javascript:void(0);" onclick="skipuser('<?=$sit['id']?>','1')" style="color: #999999;font-size:0.9em;"><?=$lang['b_360']?></a>]</font>
+		<a href="javascript:void(0);" onclick="ModulePopup('<?=$sit['id']?>','<?=$sit['url']?>','Soundcloud','<?=($sit['cpc']-1)?>','1');" class="followbutton"><?=$lang['scf_12']?></a>
+		<font style="font-size:0.8em;">[<a href="javascript:void(0);" onclick="skipuser('<?=$sit['id']?>','1')" style="color: #999999;font-size:0.9em;"><?=$lang['scf_14']?></a>]</font>
 		<span style="position:absolute;bottom:1px;right:2px;"><a href="javascript:void(0);" onclick="report_page('<?=$sit['id']?>','<?=base64_encode('http://soundcloud.com/'.$sit['url'])?>','scf');"><img src="img/report.png" alt="Report" title="Report" border="0" /></a></span>
 	</center>
 </div>

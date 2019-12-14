@@ -2,6 +2,8 @@
 if(! defined('BASEPATH') ){ exit('Unable to view file.'); }
 
 $lang['gp_01'] = 'Page was successfully added!';
+$lang['gp_02'] = 'SUCCESS! You skipped this page!';
+$lang['gp_03'] = 'SUCCESS! You have received <b>-NUM- coins</b>!';
 $lang['gp_04'] = 'Page already added!';
 $lang['gp_05'] = 'ERROR! You have to be logged in to receive coins!';
 

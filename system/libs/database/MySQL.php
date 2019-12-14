@@ -197,9 +197,5 @@ class MySQLConnection {
 	public function GetLastInsertId() {
 		return $this->QueryFirstValue("SELECT LAST_INSERT_ID()");			
 	}
-	
-	public function SetNames($type = 'utf8') {
-		return $this->Query("SET NAMES '".$type."'");			
-	}
 }
 ?>

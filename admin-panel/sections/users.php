@@ -6,9 +6,6 @@ if(isset($_GET['del']) && is_numeric($_GET['del'])){
 		$db->Query("DELETE FROM `users` WHERE `id`='".$del."'");
 		$db->Query("UPDATE `users` SET `ref`='0' WHERE `ref`='".$del."'");
 	}
-}elseif(isset($_GET['confirm']) && is_numeric($_GET['confirm'])){
-	$confirm = $db->EscapeString($_GET['confirm']);
-	$db->Query("UPDATE `users` SET `activate`='0' WHERE `id`='".$confirm."'");
 }
 
 if(isset($_GET['edit']) && is_numeric($_GET['edit'])){
@@ -32,42 +29,30 @@ if(!empty($sorting) && !empty($order_by)){
 }
 
 $db_value = '';
-$url_value = '';
 if(isset($_GET['su'])){
 	$search = $db->EscapeString($_GET['su']);
 	if($_GET['s_type'] == 1){
 		$db_value = ($search != '' ?  " WHERE `email` LIKE '%".$search."%'" : "");
 	}elseif($_GET['s_type'] == 2){
 		$db_value = ($search != '' ?  " WHERE `IP` LIKE '%".$search."%' OR `log_ip` LIKE '%".$search."%'" : "");
-	}elseif($_GET['s_type'] == 3){
-		$db_value = ($search != '' ?  " WHERE `ref_source` LIKE '%".$search."%'" : "");
 	}else{
 		$db_value = ($search != '' ?  " WHERE `login` LIKE '%".$search."%'" : "");
 	}
 }elseif(isset($_GET['online'])){
 	$db_value = ' WHERE ('.time().'-UNIX_TIMESTAMP(online)) < 3600';
-	$url_value = '&online';
 }elseif(isset($_GET['today'])){
-	$db_value = " WHERE DATE(signup)='".date('Y-m-d')."'";
+	$db_value = ' WHERE DATE(signup)=CURDATE()';
 	$order_value = 'a.signup DESC';
-	$url_value = '&today';
 }elseif(isset($_GET['premium'])){
 	$db_value = " WHERE premium > '0'";
-	$url_value = '&premium';
 }elseif(isset($_GET['country'])){
 	$code = $db->EscapeString($_GET['country']);
 	$db_value = " WHERE country = '".$code."'";
-	$url_value = '&country='.$code;
 }elseif(isset($_GET['refid'])){
 	$refid = $db->EscapeString($_GET['refid']);
 	$db_value = " WHERE ref = '".$refid."'";
-	$url_value = '&online='.$refid;
 }elseif(isset($_GET['banned'])){
 	$db_value = " WHERE banned > '0'";
-	$url_value = '&banned';
-}elseif(isset($_GET['unverified'])){
-	$db_value = " WHERE activate > '0'";
-	$url_value = '&unverified';
 }
 
 $pagina = (isset($_GET['p']) ? $_GET['p'] : 0);
@@ -408,7 +393,7 @@ if(isset($_GET['edit']) && $edit['login'] != ""){
 				</div>	
 				<div class="row">
 					<label for="v1_charrange"><strong>By</strong></label>
-					<div><select name="s_type"><option value="0">Username</option><option value="1">Email</option><option value="2">IP</option><option value="3">Source</option></select></div>
+					<div><select name="s_type"><option value="0">Username</option><option value="1">Email</option><option value="2">IP</option></select></div>
 				</div>				     
 			</div>
 			<div class="actions">
@@ -489,7 +474,7 @@ foreach($accounts as $account){
 </section>
 <?}else{?>
 <section id="content" class="container_12 clearfix" data-sort=true>
-	<h1 class="grid_12">Users (<?=$total_pages?>) <span style="float:right;font-size:11px">Order by: <a href="<?=GetHref('sort='.($sorting == 'desc' ? 'asc' : 'desc').'&oby=1')?>">ID <img src="img/elements/table/sorting<?=($sorting == 'asc' && $order_by == 1 ? '-asc' : ($sorting == 'desc' && $order_by == 1 ? '-desc' : ''))?>.png" border="0" /></a>| <a href="<?=GetHref('sort='.($sorting == 'desc' ? 'asc' : 'desc').'&oby=2')?>">Coins <img src="img/elements/table/sorting<?=($sorting == 'asc' && $order_by == 2 ? '-asc' : ($sorting == 'desc' && $order_by == 2 ? '-desc' : ''))?>.png" border="0" /></a>| <a href="<?=GetHref('sort='.($sorting == 'desc' ? 'asc' : 'desc').'&oby=3')?>">Clicks <img src="img/elements/table/sorting<?=($sorting == 'asc' && $order_by == 3 ? '-asc' : ($sorting == 'desc' && $order_by == 3 ? '-desc' : ''))?>.png" border="0" /></a></span></h1>
+	<h1 class="grid_12">Users <span style="float:right;font-size:11px">Order by: <a href="<?=GetHref('sort='.($sorting == 'desc' ? 'asc' : 'desc').'&oby=1')?>">ID <img src="img/elements/table/sorting<?=($sorting == 'asc' && $order_by == 1 ? '-asc' : ($sorting == 'desc' && $order_by == 1 ? '-desc' : ''))?>.png" border="0" /></a>| <a href="<?=GetHref('sort='.($sorting == 'desc' ? 'asc' : 'desc').'&oby=2')?>">Coins <img src="img/elements/table/sorting<?=($sorting == 'asc' && $order_by == 2 ? '-asc' : ($sorting == 'desc' && $order_by == 2 ? '-desc' : ''))?>.png" border="0" /></a>| <a href="<?=GetHref('sort='.($sorting == 'desc' ? 'asc' : 'desc').'&oby=3')?>">Clicks <img src="img/elements/table/sorting<?=($sorting == 'asc' && $order_by == 3 ? '-asc' : ($sorting == 'desc' && $order_by == 3 ? '-desc' : ''))?>.png" border="0" /></a></span></h1>
 	<div class="grid_12">
 		<div class="box">
 			<table class="styled dynamic full">
@@ -519,11 +504,8 @@ foreach($users as $user){
 						<td><?=($user['admin'] == 0 ? 'User' : '<b>Admin</b>')?></td>
 						<td><?=number_format($user['total']).' clicks'?></td>
 						<td class="center">
-							<a href="index.php?x=users<?=$url_value?>&edit=<?=$user['id']?>" class="button small grey tooltip" data-gravity=s title="Edit"><i class="icon-pencil"></i></a>
-							<a href="index.php?x=users<?=$url_value?>&del=<?=$user['id']?>" onclick="return confirm('You sure you want to delete this user?');" class="button small grey tooltip" data-gravity=s title="Remove"><i class="icon-remove"></i></a>
-							<? if(isset($_GET['unverified'])){ ?>
-								<a href="index.php?x=users<?=$url_value?>&confirm=<?=$user['id']?>" onclick="return confirm('You sure you want to confirm this user email address?');" class="button small grey tooltip" data-gravity=s title="Confirm Email"><i class="icon-ok"></i></a>
-							<?}?>
+							<a href="index.php?x=users&edit=<?=$user['id']?>" class="button small grey tooltip" data-gravity=s title="Edit"><i class="icon-pencil"></i></a>
+							<a href="index.php?x=users&del=<?=$user['id']?>" onclick="return confirm('You sure you want to delete this user?');" class="button small grey tooltip" data-gravity=s title="Remove"><i class="icon-remove"></i></a>
 						</td>
 					</tr>
 <?}?>

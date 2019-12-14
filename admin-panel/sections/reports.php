@@ -99,7 +99,7 @@ include('../system/libs/apaginate.php');
 						<?if(!isset($_GET['completed'])){?>
 						<td class="center">
 							<a href="index.php?x=reports&ign=<?=$report['id']?>" onclick="return confirm('You sure you want to ignore this report?');" class="button small grey tooltip" data-gravity=s title="Ignore"><i class="icon-ok-sign"></i></a>
-							<a href="index.php?x=reports&ban_page=<?=$report['id']?>" onclick="return confirm('You sure you want to ban this page?');" class="button small grey tooltip" data-gravity=s title="Ban Page"><i class="icon-minus-sign"></i></a>
+							<a href="index.php?x=reports&ban_page=<?=$report['id']?>" onclick="return confirm('You sure you want to ban this page?');" class="button small grey tooltip" data-gravity=s title="Ignore"><i class="icon-minus-sign"></i></a>
 							<a href="index.php?x=reports&del_page=<?=$report['id']?>" onclick="return confirm('You sure you want to delete this page?');" class="button small grey tooltip" data-gravity=s title="Delete Page"><i class="icon-remove"></i></a>
 						</td>
 						<?}?>

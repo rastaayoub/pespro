@@ -17,9 +17,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'get'){
 			$receivers = " AND `coins`<'10'";
 		}elseif($_POST['receivers'] == 5){
 			$receivers = " AND `premium`>'0'";
-		}elseif($_POST['receivers'] == 7){
-			$country = $db->EscapeString($_POST['country']);
-			$receivers = " AND `country` LIKE '".$country."'";
 		}else{
 			$receivers = '';
 		}
@@ -49,7 +46,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'get'){
 				$subject = str_replace('-USER-', $data['login'], $subject);
 
 				$mailer = new PHPMailer();
-				$mailer->CharSet = 'UTF-8';
 
 				if($site['mail_delivery_method'] == 1){
 					$mailer->isSMTP();
@@ -102,9 +98,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'get'){
 					$receivers = " AND `coins`<'10'";
 				}elseif($_POST['receivers'] == 5){
 					$receivers = " AND `premium`>'0'";
-				}elseif($_POST['receivers'] == 7){
-					$country = $db->EscapeString($_POST['country']);
-					$receivers = " AND `country` LIKE '".$country."'";
 				}else{
 					$receivers = '';
 				}
@@ -116,7 +109,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'get'){
 				$sql = $db->Query("SELECT id,login,email FROM `users` WHERE (`activate`='0' AND `banned`!='1')".$receivers." LIMIT ".$start.",".$limit);
 
 				$mailer = new PHPMailer();
-				$mailer->CharSet = 'UTF-8';
 				
 				if($site['mail_delivery_method'] == 1){
 					$mailer->isSMTP();

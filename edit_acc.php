@@ -6,30 +6,25 @@ if(!$is_online){
 
 $mesaj = '';
 if(isset($_POST['change_pass'])){
-	if (MD5($_POST['old_password']) != $data['pass']) {
-		$mesaj = '<div class="msg"><div class="error">'.$lang['b_357'].'</div></div>';
-	}elseif(!checkPwd($_POST['password'],$_POST['password2'])) {
-		$mesaj = '<div class="msg"><div class="error">'.$lang['b_63'].'</div></div>';
+	if (!checkPwd($_POST['password'],$_POST['password2'])) {
+		$mesaj = '<div class="msg"><div class="error">'.$lang['b_63'].'</div></div><br>';
 	}else{
 		$enpass = MD5($_POST['password']);
 		$db->Query("UPDATE `users` SET `pass`='".$enpass."' WHERE `id`='".$data['id']."'");
-		$mesaj = '<div class="msg"><div class="success">'.$lang['b_64'].'</div></div>';
+		$mesaj = '<div class="msg"><div class="success">'.$lang['b_64'].'</div></div><br>';
 	}
 }elseif(isset($_POST['change_email'])){
 	$email = $db->EscapeString($_POST['email']);
-	$password = $db->EscapeString($_POST['password']);
 	$subs = $db->EscapeString($_POST['subscribe']);
 	$subs = ($subs != 0 && $subs != 1 ? 1 : $subs);
 
-	if (MD5($_POST['password']) != $data['pass']) {
-		$mesaj = '<div class="msg"><div class="error">'.$lang['b_357'].'</div></div>';
-	}elseif(!isEmail($email)) {
-		$mesaj = '<div class="msg"><div class="error">'.$lang['b_65'].'</div></div>';
+	if(!isEmail($email)) {
+		$mesaj = '<div class="msg"><div class="error">'.$lang['b_65'].'</div></div><br>';
 	}elseif($db->QueryGetNumRows("SELECT id FROM `users` WHERE `email`='".$email."' LIMIT 1") > 0 && $data['email'] != $email){
-		$mesaj = '<div class="msg"><div class="error">'.$lang['b_66'].'</div></div>';
+		$mesaj = '<div class="msg"><div class="error">'.$lang['b_66'].'</div></div><br>';
 	}else{
 		$db->Query("UPDATE `users` SET `email`='".$email."', `newsletter`='".$subs."' WHERE `id`='".$data['id']."'");
-		$mesaj = '<div class="msg"><div class="success">'.$lang['b_67'].'</div></div>';
+		$mesaj = '<div class="msg"><div class="success">'.$lang['b_67'].'</div></div><br>';
 	}
 }
 
@@ -45,14 +40,14 @@ if(isset($_POST['change_info'])){
 	}
 
 	if($gender != 1 && $gender != 2){
-		$mesaj = '<div class="msg"><div class="error">'.$lang['b_208'].'</div></div>';
+		$mesaj = '<div class="msg"><div class="error">'.$lang['b_208'].'</div></div><br>';
 	}elseif(!in_array($country, $ctrs) || $country == '0'){
-		$mesaj = '<div class="msg"><div class="error">'.$lang['b_209'].'</div></div>';
+		$mesaj = '<div class="msg"><div class="error">'.$lang['b_209'].'</div></div><br>';
 	}elseif($data['c_changes'] >= $change_limit){
-		$mesaj = '<div class="msg"><div class="error">'.lang_rep($lang['b_222'], array('-NUM-' => $change_limit)).'</div></div>';
+		$mesaj = '<div class="msg"><div class="error">'.lang_rep($lang['b_222'], array('-NUM-' => $change_limit)).'</div></div><br>';
 	}else{
 		$db->Query("UPDATE `users` SET `country`='".$country."', `c_changes`=`c_changes`+'1', `sex`='".$gender."' WHERE `id`='".$data['id']."'");
-		$mesaj = '<div class="msg"><div class="success">'.$lang['b_211'].'</div></div>';
+		$mesaj = '<div class="msg"><div class="success">'.$lang['b_211'].'</div></div><br>';
 	}
 }
 ?>
@@ -61,12 +56,7 @@ if(isset($_POST['change_info'])){
 	<div class="infobox t-left">
 		<form method="post">
 			<p>
-				<b><?=$lang['b_70']?></b><br />
 				<input class="text big" type="email" value="<?=$data['email']?>" name="email" /> <input type="submit" class="gbut" value="<?=$lang['b_58']?>" name="change_email" />
-			</p>
-			<p>
-				<b><?=$lang['b_15']?></b><br />
-				<input class="text big" type="password" name="password"/>
 			</p>
 			<p>
 				<?=$lang['b_245']?> <input type="radio" name="subscribe" value="1" <?=(!isset($_POST['subscribe']) && $data['newsletter'] == 1 ? 'checked="checked" ' : (isset($_POST['subscribe']) && $_POST['subscribe'] == 1 ? 'checked="checked" ' : ''))?>/> Yes <input type="radio" name="subscribe" value="0" <?=(!isset($_POST['subscribe']) && $data['newsletter'] == 0 ? 'checked="checked" ' : (isset($_POST['subscribe']) && $_POST['subscribe'] == 0 ? 'checked="checked" ' : ''))?>/> No
@@ -95,10 +85,6 @@ if(isset($_POST['change_info'])){
 	<h2 class="title"><?=$lang['b_68']?></h2>
 	<div class="infobox t-left">
 		<form method="post">
-			 <p>
-				 <b><?=$lang['b_356']?></b> <br />
-				 <input class="text big" type="password" name="old_password"/>
-			 </p>
 			 <p>
 				 <b><?=$lang['b_71']?></b> <br />
 				 <input class="text big" type="password" name="password"/>

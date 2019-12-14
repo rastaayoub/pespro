@@ -77,8 +77,7 @@ if(isset($_GET['edit'])){
 							<th>User ID</th>
 							<th>URL</th>
 							<th>Targeting</th>
-							<th>Exchanges</th>
-							<th>Status</th>
+							<th>Clicks</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -87,15 +86,14 @@ if(isset($_GET['edit'])){
   $sql = $db->Query("SELECT * FROM `stumble`".$s_value." ORDER BY `id` ASC LIMIT ".$start.",".$limit."");
   $as = $db->FetchArrayAll($sql);
   foreach($as as $sites){
-  $rec = ($sites['sex'] == '0' ? 'All Genders' : ($sites['sex'] == 1 ? 'Men' : 'Women')).' </b>|</b> '.($sites['country'] == '0' ? 'All Countries' : 'Selected Countries');
+  $rec = ($sites['sex'] == '0' ? 'All Genders' : ($sites['sex'] == 1 ? 'Men' : 'Women')).' </b>|</b> '.($sites['country'] == '0' ? 'All Countries' : get_country($sites['country']));
 ?>	
 						<tr>
 							<td><?=$sites['id']?></td>
 							<td><a href="index.php?x=users&edit=<?=$sites['user']?>"><?=$sites['user']?></a></td>
 							<td><a href="<?=$sites['url']?>" target="_blank"><?=truncate($sites['url'], 60)?></a></td>
 							<td><?=$rec?></td>
-							<td><?=$sites['today_clicks'].' today - '.$sites['clicks'].' total'?></td>
-							<td><?=($sites['active'] == 1 ? '<font color="red">Disabled</font>' : ($sites['active'] == 2 ? '<font color="red">Banned</font>' : '<font color="green">Active</font>'))?></td>
+							<td><?=$sites['clicks']?></td>
 							<td class="center">
 								<a href="index.php?x=sites&s=<?=$account?>&edit=<?=$sites['id']?>" class="button small grey tooltip" data-gravity=s title="Edit"><i class="icon-pencil"></i></a>
 								<a href="index.php?x=sites&s=<?=$account?>&del=<?=$sites['id']?>" class="button small grey tooltip" data-gravity=s title="Remove"><i class="icon-remove"></i></a>

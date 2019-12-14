@@ -1,6 +1,8 @@
 <?php
 include('header.php');
-if(!$is_online){ redirect('index.php'); }
+if(!$is_online){
+	redirect('index.php');
+}
 
 $msg = '';
 if(isset($_GET['success'])){
@@ -23,13 +25,9 @@ if(isset($_GET['convert']) && $site['convert_enabled'] == 1){
 		}elseif($coins < $site['min_convert']){
 			$msg = '<div class="msg"><div class="error">'.lang_rep($lang['b_265'], array('-MIN-' => $site['min_convert'])).'</div></div>';
 		}else{
-			$cash = floor(((1/$site['convert_rate'])*$coins) * 100) / 100;
-			
-			if($cash > 0) {
-				$db->Query("UPDATE `users` SET `coins`=`coins`-'".$coins."', `account_balance`=`account_balance`+'".$cash."' WHERE `id`='".$data['id']."'");
-				$db->Query("INSERT INTO `coins_to_cash` (user, coins, cash, conv_rate, date) VALUES('".$data['id']."', '".$coins."', '".$cash."', '".$site['convert_rate']."', '".time()."')");
-			}
-
+			$cash = round((1/$site['convert_rate'])*$coins, 2);
+			$db->Query("UPDATE `users` SET `coins`=`coins`-'".$coins."', `account_balance`=`account_balance`+'".$cash."' WHERE `id`='".$data['id']."'");
+			$db->Query("INSERT INTO `coins_to_cash` (user, coins, cash, conv_rate, date) VALUES('".$data['id']."', '".$coins."', '".$cash."', '".$site['convert_rate']."', '".time()."')");
 			$msg = '<div class="msg"><div class="success">'.lang_rep($lang['b_266'], array('-NUM-' => $coins, '-CASH-' => get_currency_symbol($site['currency_code']).' '.$cash)).'</div></div>';
 		}
 	}
@@ -41,8 +39,9 @@ if(isset($_GET['convert']) && $site['convert_enabled'] == 1){
 <center><div class="ucp_link<?=(!isset($_GET['convert']) && !isset($_GET['withdraw']) ? ' active' : '')?>" style="margin-right:5px;display:inline-block"><a href="bank.php"><?=$lang['b_256']?></a></div><?if($site['convert_enabled'] == 1){?><div class="ucp_link<?=(isset($_GET['convert']) ? ' active' : '')?>" style="margin-right:5px;display:inline-block"><a href="bank.php?convert"><?=$lang['b_268']?></a></div><?}?><?if($site['allow_withdraw'] == 1){?><div class="ucp_link<?=(isset($_GET['withdraw']) ? ' active' : '')?>" style="margin-right:5px;display:inline-block"><a href="bank.php?withdraw"><?=$lang['b_97']?></a></div><?}?></center><hr>
 <script type="text/javascript">
 	function get_amount(value){
-		if(value > 0) {
-			var amount = Math.floor((<?=(1/$site['convert_rate'])?>*value)*100)/100;
+		if(value > 0)
+		{
+			var amount = Math.round((<?=(1/$site['convert_rate'])?>*value)*100)/100;
 			$('#amount-final').html('<?=$lang['b_269']?> <b><?=get_currency_symbol($site['currency_code'])?> '+ amount +'</b>');
 		}
 	}
@@ -115,7 +114,7 @@ if(isset($_GET['convert']) && $site['convert_enabled'] == 1){
 		$valid = false;
 		if($gateway == 'paypal' && $site['paypal_status'] == 1){
 			$valid = true;
-		}elseif($gateway == 'payeer' && $site['payeer_status'] == 1){
+		}elseif($gateway == 'payza' && $site['payza_status'] == 1){
 			$valid = true;
 		}
 		
@@ -157,8 +156,8 @@ if($can_withdraw){
 		<p>
 			<label><?=$lang['b_226']?></label><br/>
 			<select name="gateway" id="gateway" onchange="setSelect()" style="padding:4px;width:226px">
-				<?if($site['paypal_status'] == 1){?><option value="paypal">PayPal</option><?}?>
-				<?if($site['payeer_status'] == 1){?><option value="payeer">Payeer</option><?}?>
+				<?if($site['paypal_status'] == 1){?><option value="paypal">Paypal</option><?}?>
+				<?if($site['payza_status'] == 1){?><option value="payza">Payza</option><?}?>
 			</select>
 		</p>
 		<p>
@@ -218,24 +217,17 @@ if(!$requests){
 <?}}?>
 		</tbody>
 	</table>
-<?php
+<?
 }else{
 	$refs = $db->QueryGetNumRows("SELECT id FROM `transactions` WHERE `user_id`='".$data['id']."'");
-	if(isset($_POST['submit']) && isset($_POST['gateway'])){
+	if(isset($_POST['submit'])){
 		$cash = $db->EscapeString($_POST['cash']);
 		$gateway = $db->EscapeString($_POST['gateway']);
 		
-		$minimum = 1;
-		if($_POST['gateway'] == 'paypal'){
-			$minimum = $site['paypal_minimum'];
-		}elseif($_POST['gateway'] == 'payeer'){
-			$minimum = $site['payeer_minimum'];
-		}
-		
 		if(!is_numeric($cash)){
 			$msg = '<div class="msg"><div class="error">'.$lang['b_253'].'</div></div>';
-		}elseif($cash < $minimum){
-			$msg = '<div class="msg"><div class="error">'.lang_rep($lang['b_254'], array('-MIN-' => get_currency_symbol($site['currency_code']).' '.number_format($minimum, 2))).'</div></div>';
+		}elseif($cash < 1){
+			$msg = '<div class="msg"><div class="error">'.lang_rep($lang['b_254'], array('-MIN-' => get_currency_symbol($site['currency_code']).' 1.00')).'</div></div>';
 		}else{
 			$redurl = $site['site_url'].'/system/payments/'.$gateway.'/add_cash.php?cash='.$cash;
 			redirect($redurl);
@@ -250,13 +242,13 @@ if(!$requests){
 <form method="post">
     <p>
 		<label><?=$lang['b_256']?> (<?=get_currency_symbol($site['currency_code'])?>)</label><br/>
-		<input class="text big" type="text" name="cash" maxlength="7" placeholder="0.00" />
+		<input class="text big" type="text" value="1.00" name="cash" maxlength="7" />
 	</p>
 	<p>
 		<label><?=$lang['b_226']?></label><br/>
 		<select name="gateway" style="padding:4px;width:226px">
 			<?if($site['paypal_status'] >= 1){?><option value="paypal">Paypal</option><?}?>
-			<?if($site['payeer_status'] >= 1){?><option value="payeer">Payeer</option><?}?>
+			<?if($site['payza_status'] >= 1){?><option value="payza">Payza</option><?}?>
 		</select>
 	</p>
     <p>
@@ -287,7 +279,7 @@ if(!$requests){
 			</tr>
 		</tfoot>
 		<tbody>
-<?php
+<?
   $trans = $db->QueryFetchArrayAll("SELECT id,money,gateway,date,paid,payer_email FROM `transactions` WHERE `user_id`='".$data['id']."' ORDER BY `date` DESC LIMIT 10");
   if(!$trans){ echo '<tr><td colspan="6" align="center"><b>'.$lang['b_250'].'</b></td><tr>';}else{
   foreach($trans as $tran){

@@ -1,8 +1,4 @@
 <?php
-if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
-	include_once(realpath(dirname(__FILE__)).'/db_update.php');
-}
-
 register_filter('index_icons','su_icon');
 function su_icon($icons) {
 	global $is_online;
@@ -30,7 +26,7 @@ function su_site_menu($menu) {
 	return $menu . '<option '.$selected.'>Stumbleupon Followers</a>';
 }
 
-register_filter('exchange_menu','su_top_menu');
+register_filter('top_menu_earn','su_top_menu');
 function su_top_menu($menu) {
 	$selected = (isset($_GET["p"]) && $_GET["p"] == "su" ? ' active' : '');
 	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=su">Stumbleupon Followers</a></div>';

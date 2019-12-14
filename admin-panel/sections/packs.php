@@ -31,9 +31,8 @@ if(isset($_GET['del']) && is_numeric($_GET['del'])){
 	}
 }elseif(isset($_GET['settings'])){
 	if(isset($_POST['submit'])){
-		$posts = $_POST['set'];
+		$posts = $db->EscapeString($_POST['set']);
 		foreach ($posts as $key => $value){
-			$value = $db->EscapeString($value, 0);
 			if($site[$key] != $value){
 				if($key == 'c_discount'){
 					$value = ($value > 99 ? 99 : ($value < 0 ? 0 : $value));
@@ -84,7 +83,7 @@ if(isset($_GET['edit']) && $pack['id'] != ''){
 	<div class="grid_12">
 		<form method="post" class="box">
 			<div class="header">
-				<h2>Add Pack</h2>
+				<h2>Edit Pack</h2>
 			</div>
 			<div class="content">
 				<div class="row">
@@ -126,7 +125,7 @@ if(isset($_GET['edit']) && $pack['id'] != ''){
 				</div>
 				<div class="row">
 					<label><strong>Text on Homepage</strong></label>
-					<div><textarea name="set[c_text_index]"><?=ClearText($site['c_text_index'])?></textarea></div>
+					<div><textarea name="set[c_text_index]" required="required"><?=ClearText($site['c_text_index'])?></textarea></div>
 				</div>
 			</div>
 			<div class="actions">

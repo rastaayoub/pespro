@@ -63,7 +63,7 @@ if(isset($_POST['submit'])){
 			if(!$copied){
 				$msg = '<div class="msg"><div class="error"><b>ERROR:</b> Banner wasn\'t uploaded, please contact your site admin!</div></div>';
 			}else{
-				$banner = '/files/banners/'.$image_name;
+				$banner = $site['site_url'].'/files/banners/'.$image_name;
 				$expiration = ($pack['days']*86400)+time();
 				$db->Query("UPDATE `users` SET `account_balance`=`account_balance`-'".$pack['price']."' WHERE `id`='".$data['id']."'");
 				$db->Query("UPDATE `ad_packs` SET `bought`=`bought`+'1' WHERE `id`='".$pack['id']."'");
@@ -105,7 +105,7 @@ if(isset($_POST['submit'])){
 			<?
 			$packs = $db->QueryFetchArrayAll("SELECT * FROM `ad_packs` WHERE `type`='0' ORDER BY `price` ASC");
 			foreach($packs as $pack){
-				echo '<option value="'.$pack['id'].'" '.(isset($_POST['pack']) && $_POST['pack'] == $pack['id'] ? ' selected' : '').'">'.$pack['days'].' '.$lang['b_178'].' - '.get_currency_symbol($site['currency_code']).$pack['price'].'</option>';
+				echo '<option value="'.$pack['id'].'" '.(isset($_POST['pack']) && $_POST['pack'] == $pack['id'] ? ' selected' : '').'">'.$pack['days'].' '.$lang['b_178'].' - '.$pack['price'].' '.get_currency_symbol($site['currency_code']).'</option>';
 			}
 			?>
 			</select>
@@ -159,7 +159,7 @@ if(isset($_POST['delete'])){
 				<select name="pack" class="styled">
 				<?
 					$packs = $db->QueryFetchArrayAll("SELECT * FROM `ad_packs` WHERE `type`='".$banner['type']."' ORDER BY `price` ASC");
-					foreach($packs as $pack){echo '<option value="'.$pack['id'].'"'.(isset($_POST["pack"]) && $_POST["pack"] == $pack['id'] ? ' selected' : '').'>'.$pack['days'].' '.$lang['b_178'].' - '.get_currency_symbol($site['currency_code']).$pack['price'].'</option>';}
+					foreach($packs as $pack){echo '<option value="'.$pack['id'].'"'.(isset($_POST["pack"]) && $_POST["pack"] == $pack['id'] ? ' selected' : '').'>'.$pack['days'].' '.$lang['b_178'].' - '.$pack['price'].' '.get_currency_symbol($site['currency_code']).'</option>';}
 				?>
 				</select>
 			</p>
@@ -171,7 +171,7 @@ if(isset($_POST['delete'])){
 </div>
 <?}else{?>
 <div class="content t-left"><h2 class="title"><?=$lang['b_179']?></h2>
-<div class="infobox" style="text-align:center"><div class="ucp_link<?=(!isset($_GET['add']) ? ' active' : '')?>" style="margin-right:5px;display:inline-block"><a href="banners.php"><?=$lang['b_179']?></a></div><div class="ucp_link<?=(isset($_GET['add']) ? ' active' : '')?>" style="margin-right:5px;display:inline-block"><a href="banners.php?add"><?=$lang['b_173']?></a></div></div>
+<div class="infobox" style="text-align:center"><div class="ucp_link<?=(!isset($_GET['add']) ? ' active' : '')?>" style="margin-right:5px;display:inline-block"><a href="banners.php"><?=$lang['b_179']?></a></div><div class="ucp_link<?=(isset($_GET['add']) ? ' active' : '')?>" style="margin-right:5px;display:inline-block"><a href="banners.php?add"><?=$lang['b_173']?></a></div></div><br />
 <table cellpadding="5" class="table">
 	<thead>
 		<tr><td><?=$lang['b_182']?></td><td width="75px"><?=$lang['b_183']?></td><td><?=$lang['b_184']?></td><td><?=$lang['b_339']?></td><td><?=$lang['b_75']?></td><td><?=$lang['b_185']?></td></tr>
@@ -184,7 +184,7 @@ $x = 1; $x++;
 $status = ($banner['expiration'] != 0 ? '<font color="green">'.$lang['b_180'].'</font>' : ($mysite['status'] == 2 ? '<font color="red"><b>'.$lang['b_78'].'</b></font>' : '<font color="red">'.$lang['b_181'].'</font>'));
 $color = ($x%2) ? 3 : 1;
 ?>
-    <tr class="c_<?=$color?>"><td><a href="<?=$banner['site_url']?>" title="<?=$banner['site_url']?>" target="_blank"><img src="<?=$site['site_url'].$banner['banner_url']?>" width="280" border="0" /></a></td><td><?=number_format($banner['views'])?></td><td><?=number_format($banner['clicks'])?></td><td align="center"><?=($banner['type'] == 1 ? '728x90' : '468x60')?></td><td><?=$status?></td><td align="center"><?if($banner['status'] != 2){?><a href="banners.php?edit=<?=$banner['id']?>"><?=$lang['b_96']?></a><?}?></td></tr>
+    <tr class="c_<?=$color?>"><td><a href="<?=$banner['site_url']?>" title="<?=$banner['site_url']?>" target="_blank"><img src="<?=$banner['banner_url']?>" width="280" border="0" /></a></td><td><?=number_format($banner['views'])?></td><td><?=number_format($banner['clicks'])?></td><td align="center"><?=($banner['type'] == 1 ? '728x90' : '468x60')?></td><td><?=$status?></td><td align="center"><?if($banner['status'] != 2){?><a href="banners.php?edit=<?=$banner['id']?>"><?=$lang['b_96']?></a><?}?></td></tr>
 <?}?>
 	</tbody>
 </table>

@@ -5,6 +5,7 @@ if(!$is_online){
 }
 
 $id = $db->EscapeString($_GET['id']);
+
 $x = $db->QueryFetchArray("SELECT id,url FROM `surf` WHERE `id`='".$id."' AND `confirm`>'0'");
 if(empty($x['id'])){
 	redirect('index.php');

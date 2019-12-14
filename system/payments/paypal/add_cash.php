@@ -1,15 +1,18 @@
 <?
 define('BASEPATH', true);
 require('../../config.php');
-if(!$is_online){ redirect('../../../index.php'); }
-
-$cash = $site['paypal_minimum'];
-if($_GET['cash'] != '' && is_numeric($_GET['cash'])){
-	$cash = ($_GET['cash'] < $site['paypal_minimum'] ? $site['paypal_minimum'] : $_GET['cash']);
-	$cash = number_format($cash, 2, '.', '');
+if(!$is_online){
+	redirect('../../../index.php');
 }
 
 $s_host = parse_url($site['site_url']);
+
+if($_GET['cash'] != '' && is_numeric($_GET['cash'])){
+	$cash = ($_GET['cash'] < 1 ? 1 : $_GET['cash']);
+	$cash = number_format($cash, 2, '.', '');
+}else{
+	redirect('../../../index.php');
+}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>Redirecting...</title>

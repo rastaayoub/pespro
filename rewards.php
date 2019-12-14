@@ -2,10 +2,7 @@
 include('header.php');
 
 $rewards = $db->QueryFetchArrayAll("SELECT * FROM `activity_rewards` ORDER BY `exchanges` ASC");
-$myLevel = userLevel($data['id'], 0);
-$myBonus = ($data['premium'] > 0 ? $myLevel['vip_bonus'] : $myLevel['free_bonus']);
-
-if(!$is_online || empty($myBonus) && empty($rewards)){
+if(!$is_online || $site['daily_bonus'] == 0 && empty($rewards)){
 	redirect('index.php');
 }
 
@@ -23,39 +20,30 @@ function r_time($seconds) {
 		}
 	} 
 }  
+
+$cf_bonus = $db->QueryFetchArray("SELECT SUM(`today_clicks`) AS `clicks` FROM `user_clicks` WHERE `uid`='".$data['id']."'");
+$cf_bonus = ($cf_bonus['clicks'] > 0 ? $cf_bonus['clicks'] : 0);
+
+if(($data['daily_bonus']+86400) < time()){
 ?>
+<script type="text/javascript">
+	var msg1 = '<?=mysql_escape_string(lang_rep($lang['b_38'], array('-NUM-' => ($data['premium'] > 0 ? $site['daily_bonus_vip'] : $site['daily_bonus']))))?>';
+	var msg2 = '<?=mysql_escape_string($lang['b_39'])?>';
+	function checkBonus(){$("#bonus").hide();$("#loading").show();$.ajax({type:"GET",url:"system/ajax.php?a=dailyBonus",cache:false,success:function(a){if(a==1){$("#loading").hide();$("#txtHint").html('<div class="msg"><div class="success">'+msg1+'</div></div>')}else{$("#loading").hide();$("#txtHint").html('<div class="msg"><div class="error">'+msg2+'</div></div>')}}})}
+</script><?}?>
 <div class="content">
-	<? 
-		if($myBonus > 0){
-	?>
 	<h2 class="title"><?=$lang['b_09']?></h2>
-	<h2><?=lang_rep($lang['b_40'], array('-NUM-' => $myBonus))?></h2>
-	<? 
-		if(($data['daily_bonus']+86400) < time()){ 
-			$cf_bonus = $db->QueryFetchArray("SELECT SUM(`today_clicks`) AS `clicks` FROM `user_clicks` WHERE `uid`='".$data['id']."'");
-			$cf_bonus = ($cf_bonus['clicks'] > 0 ? $cf_bonus['clicks'] : 0);
-	?>
-		<script type="text/javascript">
-			var msg1 = '<?=$db->EscapeString(lang_rep($lang['b_38'], array('-NUM-' => ($data['premium'] > 0 ? $myLevel['vip_bonus'] : $myLevel['free_bonus']))), 0)?>';
-			var msg2 = '<?=$db->EscapeString($lang['b_39'], 0)?>';
-			function checkBonus(){$("#bonus").hide();$("#txtHint").html('<img src="img/loader.gif" alt="Loading..." title="Loading..." />');$.ajax({type:"GET",url:"system/ajax.php?a=dailyBonus",cache:false,success:function(a){if(a==1){$("#txtHint").html('<div class="msg"><div class="success">'+msg1+'</div></div>')}else{$("#txtHint").html('<div class="msg"><div class="error">'+msg2+'</div></div>')}}})}
-		</script>
+	<h2><?=lang_rep($lang['b_40'], array('-NUM-' => ($data['premium'] > 0 ? $site['daily_bonus_vip'] : $site['daily_bonus'])))?></h2>
+	<?if(($data['daily_bonus']+86400) < time()){?>
 		<div id="txtHint"></div>
-	<? 
-		if($cf_bonus < $site['crf_bonus']){ 
-	?>
+	<?if($cf_bonus < $site['crf_bonus']){?>
 		<div class="msg"><div class="error"><?=lang_rep($lang['b_225'], array('-NUM-' => $site['crf_bonus'], '-REM-' => ($site['crf_bonus'] - $cf_bonus)))?></div></div>
-	<? 
-		}else{ 
-	?>
-		<input type="button" id="bonus" class="gbut" onclick="checkBonus()" value="<?=$lang['b_166']?>" />
-	<? 
-			}
-		}else{
-	?>
+	<?}else{?>
+		<img src="img/loader.gif" alt="Loading..." title="Loading..." id="loading" style="display:none" />
+		<input type="button" id="bonus" class="gbut" name="bonnus" onclick="checkBonus()" value="<?=$lang['b_166']?>" />
+	<?}}else{?>
 		<div class="msg"><div class="error"><?=lang_rep($lang['b_41'], array('-TIME-' => r_time(($data['daily_bonus']+86400)-time())))?></div></div>
 <?
-		}
 	}
 	if($rewards){
 		$total_clicks = $db->QueryFetchArray("SELECT SUM(`total_clicks`) AS `clicks` FROM `user_clicks` WHERE `uid`='".$data['id']."'");

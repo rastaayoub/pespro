@@ -1,4 +1,4 @@
-<?php
+<?
 if(! defined('BASEPATH') ){ exit('Unable to view file.'); }
 $mesaj = '';
 if(isset($_POST['submit'])){

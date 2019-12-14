@@ -21,13 +21,12 @@ $subscribed_users = $db->QueryFetchArray("SELECT COUNT(*) AS `total` FROM `users
 	var title = '';
 	var message = '';
 	function send(){
-		captcha = $("#captcha").val();
-		limit = $("#batches").val();
-		receivers = $("#receivers").val();
-		interval = $("#interval").val();
-		title = $("#title").val();
-		message = $("#message").val();
-		country = $("#country").val();
+		captcha = document.getElementById("captcha").value;
+		limit = document.getElementById("batches").value;
+		receivers = document.getElementById("receivers").value;
+		interval = document.getElementById("interval").value;
+		title = document.getElementById("title").value;
+		message = document.getElementById("message").value;
 		start_process();
 	}
 	function start_process() {
@@ -35,13 +34,10 @@ $subscribed_users = $db->QueryFetchArray("SELECT COUNT(*) AS `total` FROM `users
 		$.ajax({
 			type: "POST", 
 			url: "sections/inc/sendemails.php", 
-			data: "action=get&country="+country+"&receivers="+receivers, 
+			data: "action=get&receivers="+receivers, 
 			success: function (a) {
 				eTotal = a;
 				send_mails();
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				alert(textStatus);
 			}
 		});
 	}
@@ -49,7 +45,7 @@ $subscribed_users = $db->QueryFetchArray("SELECT COUNT(*) AS `total` FROM `users
 		$.ajax({
 			type: "POST", 
 			url: "sections/inc/sendemails.php", 
-			data: "action=send&start="+start+"&limit="+limit+"&title="+title+"&message="+message+"&captcha="+captcha+"&secode="+secode+"&country="+country+"&receivers="+receivers, 
+			data: "action=send&start="+start+"&limit="+limit+"&title="+title+"&message="+message+"&captcha="+captcha+"&secode="+secode+"&receivers="+receivers, 
 			success: function (a) {
 				if (a == 'DONE') {
 					start = 0;
@@ -66,13 +62,6 @@ $subscribed_users = $db->QueryFetchArray("SELECT COUNT(*) AS `total` FROM `users
 			}
 		});
 	}
-	function getval(sel) {
-		if(sel.value == '7') {
-			$('#CountryBlock').show();
-		} else {
-			$('#CountryBlock').hide();
-		}
-    }
 	function bbcode(code, tag){
 		document.getElementById(code).value += tag; 
 	}
@@ -87,19 +76,7 @@ $subscribed_users = $db->QueryFetchArray("SELECT COUNT(*) AS `total` FROM `users
 			<div class="content">
 				<div class="row">
 					<label><strong>To</strong></label>
-					<div><select style="width:100%" name="receivers" id="receivers" onchange="getval(this);"><option value="0">All users (<?=number_format($all_users['total'])?>)</option><option value="7">Selected Country</option><option value="3">Subscribed to Newsletter (<?=number_format($subscribed_users['total'])?>)</option><option value="4">Users with under 10 coins (<?=number_format($coins_users['total'])?>)</option><option value="5">VIP Users (<?=number_format($vip_users['total'])?>)</option><option value="1">Users active in past 7 days (<?=number_format($active_users['total'])?>)</option><option value="2">Users inactive in past 7 days (<?=number_format($inactive_users['total'])?>)</option><option value="6">Preview Email (will be sent to: <?=$site['site_email']?>)</option></select></div>
-				</div>
-				<div class="row" id="CountryBlock" style="display:none">
-					<label><strong>Country</strong></label>
-					<div><select style="width:100%" name="country" id="country">
-						<? 
-							$countries = $db->QueryFetchArrayAll("SELECT country,code FROM `list_countries` ORDER BY country ASC"); 
-							echo '<option value="0"></option>';
-							foreach($countries as $country){ 
-								echo '<option value="'.$country['code'].'">'.$country['country'].'</option>';
-							}
-						?>
-					</select></div>
+					<div><select style="width:100%" name="receivers" id="receivers"><option value="0">All users (<?=number_format($all_users['total'])?>)</option><option value="3">Subscribed to Newsletter (<?=number_format($subscribed_users['total'])?>)</option><option value="4">Users with under 10 coins (<?=number_format($coins_users['total'])?>)</option><option value="5">VIP Users (<?=number_format($vip_users['total'])?>)</option><option value="1">Users active in past 7 days (<?=number_format($active_users['total'])?>)</option><option value="2">Users inactive in past 7 days (<?=number_format($inactive_users['total'])?>)</option><option value="6">Preview Email (will be sent to: <?=$site['site_email']?>)</option></select></div>
 				</div>
 				<div class="row">
 					<label><strong>Batches of emails</strong></label>

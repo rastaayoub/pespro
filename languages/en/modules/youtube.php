@@ -6,6 +6,7 @@ $lang['yt_02'] = 'Please enter a valid Youtube link!';
 $lang['yt_03'] = 'Video added successfully!';
 $lang['yt_04'] = 'Watch this video for at least -TIME- seconds and after that you will receive -COINS-';
 $lang['yt_05'] = 'Must play for -TIME- seconds';
+$lang['yt_06'] = 'Skip';
 $lang['yt_07'] = 'Click here to watch other movie';
 $lang['yt_08'] = 'Watch Video';
 $lang['yt_09'] = '';

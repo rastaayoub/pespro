@@ -1,11 +1,9 @@
-<?php
+<?
 define('BASEPATH', true);
 include('../../config.php');
 if(!$is_online){exit;}
 
-$surfType = ($data['premium'] > 0 && isset($site['vip_surf_type']) ? $site['vip_surf_type'] : $site['surf_type']);
-
-if($surfType == 2){
+if($site['surf_type'] == 2){
 	if(isset($_POST['get']) && !empty($data['id'])){
 		if($site['target_system'] != 2){
 			$dbt_value = " AND (a.country = '0' OR FIND_IN_SET('".$data['country']."', a.country)) AND (a.sex = '".$data['sex']."' OR a.sex = '0')";
@@ -15,7 +13,7 @@ if($surfType == 2){
 		if($sit['id'] > 0){
 			$surf_time = $site['surf_time'];
 			if($site['surf_time_type'] == 1){
-				$surf_time = ($site['surf_time']*$sit['cpc']);
+				$surf_time = ($site['surf_time']*($sit['cpc']-1));
 			}
 			$key = ($surf_time+time());
 			$result	= $db->Query("INSERT INTO `module_session` (`user_id`,`page_id`,`ses_key`,`module`,`timestamp`)VALUES('".$data['id']."','".$sit['id']."','".$key."','surf','".time()."') ON DUPLICATE KEY UPDATE `ses_key`='".$key."'");
@@ -54,7 +52,7 @@ if($surfType == 2){
 		$id = $db->EscapeString($_GET['id']);
 		if($db->QueryGetNumRows("SELECT * FROM `surfed` WHERE `user_id`='".$data['id']."' AND `site_id`='".$id."' LIMIT 1") == 0){
 			$db->Query("INSERT INTO `surfed` (user_id, site_id) VALUES('".$data['id']."', '".$id."')");
-			echo '<div class="msg"><div class="info">'.$lang['b_359'].'</div></div>';
+			echo '<div class="msg"><div class="info">'.$lang['surf_06'].'</div></div>';
 		}
 	}
 
@@ -82,7 +80,7 @@ if($surfType == 2){
 				$db->Query("INSERT INTO `user_clicks` (`uid`,`module`,`total_clicks`,`today_clicks`)VALUES('".$data['id']."','surf','1','1') ON DUPLICATE KEY UPDATE `total_clicks`=`total_clicks`+'1', `today_clicks`=`today_clicks`+'1'");
 
 				if(isset($_POST['cpc'])){
-					echo '<div class="msg">'.lang_rep($lang['b_358'], array('-NUM-' => ($sit['cpc']-1))).'</div>';
+					echo '<div class="msg">'.lang_rep($lang['surf_08'], array('-NUM-' => ($sit['cpc']-1))).'</div>';
 				}
 			}elseif(isset($_POST['cpc'])){
 				echo '<div class="errormsg">'.$lang['surf_07'].'</div>';

@@ -3,11 +3,11 @@ include('header.php');
 if($is_online){redirect('index.php');}
 
 if($site['captcha_sys'] == 0){
-	include('captcha.php');
+	require('captcha.php');
 }elseif($site['captcha_sys'] == 1){
-	include('system/libs/recaptcha/autoload.php');
+	require('system/libs/recaptchalib.php');
 }elseif($site['captcha_sys'] == 2){
-	include('system/libs/solvemedialib.php');
+	require('system/libs/solvemedialib.php');
 }
 
 if(isset($_GET['resend'])){
@@ -18,10 +18,9 @@ if(isset($_GET['resend'])){
 		if($site['captcha_sys'] != 3){
 			$captcha_valid = 0;
 			if($site['captcha_sys'] == 1){
-				$recaptcha = new \ReCaptcha\ReCaptcha($site['recaptcha_sec']);
-				$recaptcha = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-			
-				if($recaptcha->isSuccess()){
+				$recaptcha_error = null;
+				$resp = recaptcha_check_answer($site['recaptcha_sec'],$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
+				if($resp->is_valid){
 					$captcha_valid = 1;
 				}else{
 					$recaptcha_error = $resp->error;
@@ -106,7 +105,7 @@ if(isset($_GET['resend'])){
 	<form action="" method="post">
 			<p>
 				<label><?=$lang['b_70']?></label><br />
-				<input class="text-max" type="email" value="<?=(isset($_POST['email']) ? $db->EscapeString($_POST['email']) : '')?>" name="email" required="required" />
+				<input class="text-max" type="email" value="<?=(isset($_POST['email']) ? $_POST['email'] : '')?>" name="email" required="required" />
 			</p>
 			<?
 				if($site['captcha_sys'] != 3){
@@ -114,7 +113,7 @@ if(isset($_GET['resend'])){
 			<p>
 				<?
 				if($site['captcha_sys'] == 1){
-					echo '<script src="https://www.google.com/recaptcha/api.js"></script><div class="g-recaptcha" data-sitekey="'.$site['recaptcha_pub'].'"></div>';
+					echo '<script type="text/javascript"> var RecaptchaOptions = { theme : \'white\' }; </script>'.recaptcha_get_html($site['recaptcha_pub'], $recaptcha_error);
 				}elseif($site['captcha_sys'] == 2){
 					echo solvemedia_get_html($site['solvemedia_c']);
 				}else{
@@ -170,10 +169,9 @@ if($site['reg_status'] == 0){
 		if($site['captcha_sys'] != 3){
 			$captcha_valid = 0;
 			if($site['captcha_sys'] == 1){
-				$recaptcha = new \ReCaptcha\ReCaptcha($site['recaptcha_sec']);
-				$recaptcha = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-			
-				if($recaptcha->isSuccess()){
+				$recaptcha_error = null;
+				$resp = recaptcha_check_answer($site['recaptcha_sec'],$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
+				if($resp->is_valid){
 					$captcha_valid = 1;
 				}else{
 					$recaptcha_error = $resp->error;
@@ -214,20 +212,14 @@ if($site['reg_status'] == 0){
 			$mesaj = '<div class="msg"><div class="error">'.lang_rep($lang['b_295'], array('-IP-' => $IP)).'</div></div>';
 		}elseif($db->QueryGetNumRows("SELECT id FROM `users` WHERE `login`='".$name."' OR `email`='".$email."' LIMIT 1") > 0) {
 			$mesaj = '<div class="msg"><div class="error">'.$lang['b_127'].'</div></div>';
-		}elseif($site['more_per_ip'] != 1 && isset($_COOKIE['PESAccExist'])) {
-			$mesaj = '<div class="msg"><div class="error"><b>'.$lang['b_128'].'</b></div></div>';
 		}elseif($site['more_per_ip'] != 1 && $db->QueryGetNumRows("SELECT id FROM `users` WHERE `IP`='".$IP."' OR `log_ip`='".$IP."' LIMIT 1") > 0) {
 			$mesaj = '<div class="msg"><div class="error"><b>'.$lang['b_128'].'</b></div></div>';
 		}elseif($c_done == 0 && !in_array($country, $ctrs)) {
 			$mesaj = '<div class="msg"><div class="error">'.$lang['b_209'].'</div></div>';
 		}else{
+			$referal = (isset($_COOKIE['PlusREF']) ? $db->EscapeString($_COOKIE['PlusREF']) : 0);
 			$ref_paid = 0;
 			$activate = 0;
-			$referal = (isset($_COOKIE['PlusREF']) ? $db->EscapeString($_COOKIE['PlusREF']) : 0);
-
-			if($referal != 0 && $db->QueryGetNumRows("SELECT id FROM `users` WHERE `id`='".$referal."' LIMIT 1") == 0) {
-				$referal = 0;
-			}
 
 			if($site['reg_reqmail'] == 0){
 				require('system/libs/PHPMailer/PHPMailerAutoload.php');
@@ -289,13 +281,9 @@ if($site['reg_status'] == 0){
 
 			$passc = MD5($pass1);
 			if(isset($_COOKIE['PESRefSource'])){
-				$ref_source = $db->EscapeString($_COOKIE['PESRefSource']);
+				$ref_source = $_COOKIE['PESRefSource'];
 			}else{
 				$ref_source = '0';
-			}
-			
-			if(!isset($_COOKIE['PESAccExist'])){
-				setcookie('PESAccExist', $name, time()+604800, '/');
 			}
 			
 			$db->Query("INSERT INTO `users`(email,login,country,sex,coins,account_balance,IP,pass,ref,ref_paid,signup,newsletter,activate,ref_source) values('".$email."','".$name."','".$country."','".$gender."','".$site['reg_coins']."','".$site['reg_cash']."','".$IP."','".$passc."','".$referal."','".$ref_paid."',NOW(),'".$subs."','".$activate."','".$ref_source."')");
@@ -308,24 +296,24 @@ if($site['reg_status'] == 0){
 	<form action="" method="post">
 			<p class="reg_row_1">
 				<label><?=$lang['b_122']?></label><br />
-				<input class="text-max" type="text" value="<?=(isset($_POST['user']) ? $db->EscapeString($_POST['user']) : '')?>" name="user" id="username" placeholder="John_Doe" onchange="check_username()" required />
+				<input class="text-max" type="text" value="<?=(isset($_POST['user']) ? $_POST['user'] : '')?>" name="user" id="username" onchange="check_username()" required />
 			</p>
 			<p class="reg_row_2"> </p>
 			<p class="reg_row_1">
 				<label><?=$lang['b_70']?></label><br />
-				<input class="text-max" type="email" value="<?=(isset($_POST['email']) ? $db->EscapeString($_POST['email']) : '')?>" name="email" id="email" placeholder="email@name.com" onchange="check_email()" required />
+				<input class="text-max" type="email" value="<?=(isset($_POST['email']) ? $_POST['email'] : '')?>" name="email" id="email" onchange="check_email()" required />
 			</p>
 			<p class="reg_row_2">
 				<label><?=$lang['b_278']?></label><br />
-				<input class="text-max" type="email" name="email2" id="email2" placeholder="email@name.com" onchange="check_email2()" required />
+				<input class="text-max" type="email" name="email2" id="email2" onchange="check_email2()" required />
 			</p>
 			<p class="reg_row_1">
 				<label><?=$lang['b_15']?></label><br />
-				<input class="text-max" type="password" value="" name="password" placeholder="<?=$lang['b_15']?>" required />
+				<input class="text-max" type="password" value="" name="password" required />
 			</p>
 			<p class="reg_row_2">
 				<label><?=$lang['b_72']?></label><br />
-				<input class="text-max" type="password" value="" name="password2" placeholder="<?=$lang['b_15']?>" required />
+				<input class="text-max" type="password" value="" name="password2" required />
 			</p>
 			<p class="reg_row_1">
 				<label><?=$lang['b_202']?></label><br />
@@ -358,7 +346,7 @@ if($site['reg_status'] == 0){
 			<p>
 				<?
 				if($site['captcha_sys'] == 1){
-					echo '<script src="https://www.google.com/recaptcha/api.js"></script><div class="g-recaptcha" data-sitekey="'.$site['recaptcha_pub'].'"></div>';
+					echo '<script type="text/javascript"> var RecaptchaOptions = { theme : \'white\' }; </script>'.recaptcha_get_html($site['recaptcha_pub'], $recaptcha_error);
 				}elseif($site['captcha_sys'] == 2){
 					echo solvemedia_get_html($site['solvemedia_c']);
 				}else{

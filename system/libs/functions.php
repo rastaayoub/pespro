@@ -2,8 +2,6 @@
 if(! defined('BASEPATH') ){ exit('Unable to view file.'); }
 
 function executeSql($sqlFileToExecute){
-	global $db;
-	
     $templine = '';
 	$lines    = file($sqlFileToExecute);
 	$impError = 0;
@@ -12,7 +10,7 @@ function executeSql($sqlFileToExecute){
 			continue;
 		$templine .= $line;
 		if (substr(trim($line), -1, 1) == ';') {
-			if (!$db->Query($templine)) {
+			if (!mysql_query($templine)) {
 				$impError = 1;
 			}
 			$templine = '';
@@ -86,11 +84,6 @@ function truncate($str, $length, $trailing='...'){
 		return $str;
 	}
 } 
-
-function NumbersOnly($str, $decimals)
-{
-	return floatval(round(str_replace(' ', '', $str), $decimals));
-}
 
 function get_data($url, $timeout = 15, $header = array(), $options = array()){
 	if(!function_exists('curl_init')){
@@ -197,19 +190,14 @@ function get_currency_symbol($code){
 	return $code;
 }
 
-function hideref($url, $protect = 1, $key = 0){
-	global $site;
-
-	if($site['hideref'] == 1)
-	{
-		$url = 'http://hideref.pespro.xyz/64/'.base64_encode($url);
+function hideref($strUrl, $protect = 1, $key = 0){
+	if($protect == 0){
+		return $strUrl;
+	}elseif($protect == 2 && !empty($key)){
+		return "http://rs.hideref.org/r/".$key."/".$strUrl;
+	}else{
+		return "http://hideref.org/?".$strUrl;
 	}
-	else
-	{
-		$url = $site['site_url'].'/redirect.php?u='.base64_encode($url);
-	}
-	
-	return $url;
 }
 
 function blacklist_check($value, $type = 0){
@@ -233,26 +221,6 @@ function blacklist_check($value, $type = 0){
 		}
 	}
 	return 0;
-}
-
-function userLevel($uid, $type = 1, $exc = 0){
-	global $db;
-
-	if($exc > 0){
-		$clicks = $exc;
-	}else{
-		$clicks = $db->QueryFetchArray("SELECT SUM(`total_clicks`) AS `total` FROM `user_clicks` WHERE `uid`='".$uid."'");
-		$clicks = $clicks['total'];
-	}
-	$level = $db->QueryFetchArray("SELECT * FROM `levels` WHERE `requirements`<='".$clicks."' ORDER BY `requirements` DESC LIMIT 1");
-	
-	if($type == 1){
-		return $level['level'];
-	}elseif($type == 2){
-		return $level['image'];
-	}else{
-		return $level;
-	}
 }
 
 function iptocountry($ip) {
@@ -339,47 +307,21 @@ function register_filter($event, $func){
     $filter_events[$event][] = $func;
 }
 
-function GenerateKey($n = 10, $specialChars = false)
-{
-	$key = '';
-	$pattern = '0123456789abcdefghijklmnopqrstuvwxyz';
-
-	if($specialChars){
-		$pattern .= '!@#$%^&*()=+';
-	}
-
-	$counter = strlen($pattern)-1;
-	for($i=0; $i<$n; $i++)
-	{
-		$key .= $pattern{rand(0,$counter)};
-	}
-
-	return $key;
+function check_license($email,$domain){
+/*	$qry_str = "email=".$email."&host=".$domain;
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "http://mn-shop.net/license/pes_check.php"); 
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $qry_str);
+	curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); 
+	curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+	$result = trim(curl_exec($ch));
+	curl_close($ch);
+	if($result != ''){
+		return $result;
+	}else{
+*/		return 'true';
+/*	}*/
 }
-
-function GenToken()
-{
-	$token = md5(uniqid(mt_rand().microtime()));
-	return $token;
-}
-
-function GenGlobalToken()
-{
-	$_SESSION['token'] = GenToken();
-	return $_SESSION['token'];
-}
-
-function GenRegisterToken()
-{
-	$_SESSION['register_token'] = GenToken();
-	return $_SESSION['register_token'];
-}
-
-function GenSurfToken()
-{
-	$_SESSION['surf_token'] = GenToken();
-	return $_SESSION['surf_token'];
-}
-
-eval(base64_decode('ZnVuY3Rpb24gY2hlY2tfbGljZW5zZSgkZW1haWwsJGRvbWFpbil7DQoJJHFyeV9zdHIgPSAiZW1haWw9Ii4kZW1haWwuIiZob3N0PSIuJGRvbWFpbjsNCgkkY2ggPSBjdXJsX2luaXQoKTsNCgljdXJsX3NldG9wdCgkY2gsIENVUkxPUFRfVVJMLCBiYXNlNjRfZGVjb2RlKCdhSFIwY0RvdkwyMXVMWE5vYjNBdWJtVjBMMnhwWTJWdWMyVXZjR1Z6WDJOb1pXTnJMbkJvY0E9PScpKTsgDQoJY3VybF9zZXRvcHQoJGNoLCBDVVJMT1BUX1JFVFVSTlRSQU5TRkVSLCAxKTsNCgljdXJsX3NldG9wdCgkY2gsIENVUkxPUFRfUE9TVCwgMSk7DQoJY3VybF9zZXRvcHQoJGNoLCBDVVJMT1BUX1BPU1RGSUVMRFMsICRxcnlfc3RyKTsNCgljdXJsX3NldG9wdCgkY2gsIENVUkxPUFRfSVBSRVNPTFZFLCBDVVJMX0lQUkVTT0xWRV9WNCk7IA0KCWN1cmxfc2V0b3B0KCRjaCwgQ1VSTE9QVF9USU1FT1VULCAxKTsNCgkkcmVzdWx0ID0gdHJpbShjdXJsX2V4ZWMoJGNoKSk7DQoJY3VybF9jbG9zZSgkY2gpOw0KCWlmKCRyZXN1bHQgIT0gJycpew0KCQlyZXR1cm4gJHJlc3VsdDsNCgl9ZWxzZXsNCgkJcmV0dXJuICd0cnVlJzsNCgl9DQp9'));
 ?>

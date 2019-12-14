@@ -14,7 +14,7 @@ if(isset($_GET['sp'])){
 	}
 }
 
-$sql = $db->Query("SELECT id FROM `myspace`".$s_value);
+$sql = $db->Query("SELECT id FROM `ylike`".$s_value);
 $total_pages = $db->GetNumRows($sql);
 include('../system/libs/apaginate.php');
 

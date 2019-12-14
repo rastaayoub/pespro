@@ -1,5 +1,5 @@
 <?php
-if(!defined('BASEPATH')){ exit('Unable to view file.'); }
+if(! defined('BASEPATH') ){ exit('Unable to view file.'); }
 $url = $db->EscapeString($_POST['url']);
 $title = $db->EscapeString(truncate($_POST['title'], 100), 1);
 
@@ -16,10 +16,10 @@ if(empty($title) || empty($url)){
 	}
 	
 	function check_likes($url){
-		global $site;
-		$result = get_data('https://www.googleapis.com/youtube/v3/videos?id='.$url.'&key='.$site['yt_api'].'&part=statistics');
-		$result = json_decode($result, true);
-		if(!empty($result['items'][0]['statistics']['likeCount'])){
+		$url = get_data('https://gdata.youtube.com/feeds/api/videos/' . $url . '?v=2&alt=json');
+		$entry = json_decode($url); 
+		$attrs = $entry->{'entry'}->{'yt$rating'}->{'numLikes'};
+		if(!empty($attrs)){
 			return 1;
 		}else{
 			return 0;

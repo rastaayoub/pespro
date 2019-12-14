@@ -1,8 +1,4 @@
 <?php
-if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
-	include_once(realpath(dirname(__FILE__)).'/db_update.php');
-}
-
 register_filter('index_icons','ylike_icon');
 function ylike_icon($icons) {
 	global $is_online;
@@ -14,6 +10,12 @@ function ylike_icon($icons) {
 	}
 	
 	return $icons;
+}
+            
+register_filter('top_menu_earn','ylike_top_menu');
+function ylike_top_menu($menu) {
+	$selected = (isset($_GET["p"]) && $_GET["p"] == "ylike" ? ' active' : '');
+	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=ylike">Youtube Likes</a></div>';
 }
 
 register_filter('site_menu','ylike_site_menu');

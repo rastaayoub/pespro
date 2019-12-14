@@ -20,9 +20,8 @@ if(isset($_GET['p'])){
 	$page = $_GET['p'];
 	$table = hook_filter($_GET['p'].'_info', 'db');
 	$custom = ($_GET['p'] == 'surf' && $site['surf_type'] != 2 ? " AND `confirm`!='1'" : '');
-	$custom = ($_GET['p'] == 'ad_short' ? " AND `confirm`='1'" : '');
 }else{
-	redirect('mysites.php?p=surf');
+	redirect('mysites.php?p=google');
 }
 
 if($table == 'db'){

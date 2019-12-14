@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS `reverbnation` (
 CREATE TABLE IF NOT EXISTS `reverbnation_done` (
   `user_id` int(255) NOT NULL,
   `site_id` int(255) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  KEY `user_id` (`user_id`),
+  KEY `site_id` (`site_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `reverbnation_accounts` (

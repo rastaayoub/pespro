@@ -2,12 +2,10 @@
 if(! defined('BASEPATH') ){ exit('Unable to view file.'); }
 if(isset($_GET['del_proof']) && is_numeric($_GET['del_proof'])){
 	$del = $db->EscapeString($_GET['del_proof']);
-	$proof = $db->QueryFetchArray("SELECT p_id, proof FROM `payment_proofs` WHERE `id`='".$del."' LIMIT 1");
+	$proof = $db->QueryFetchArray("SELECT p_id FROM `payment_proofs` WHERE `id`='".$del."' LIMIT 1");
 	
 	$db->Query("DELETE FROM `payment_proofs` WHERE `id`='".$del."'");
 	$db->Query("UPDATE `requests` SET `proof`='0' WHERE `id`='".$proof['p_id']."'");
-	
-	unlink(BASE_PATH.'/'.$proof['proof']);
 }elseif(isset($_GET['accept'])){
 	$id = $db->EscapeString($_GET['accept']);
 	$db->Query("UPDATE `payment_proofs` SET `approved`='1' WHERE `id`='".$id."'");

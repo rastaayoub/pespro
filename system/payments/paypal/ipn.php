@@ -115,20 +115,24 @@ if (strcmp ($res, "VERIFIED") == 0) {
 	$get_data = explode('|', $custom); 
 		
 	if($payment_status == 'Completed'){
-		$user = $db->QueryFetchArray("SELECT id,login FROM `users` WHERE `id`='".$get_data[0]."' LIMIT 1");
-		if($site['paypal_auto'] == 1){
-			if($db->QueryGetNumRows("SELECT * FROM `transactions` WHERE `gateway`='paypal' AND `trans_id`='".$txn_id."' LIMIT 1") == 0){
-				$db->Query("INSERT INTO `transactions` (`user`, `user_id`, `money`, `gateway`, `date`, `payer_email`, `user_ip`, `trans_id`) VALUES('".$user['login']."','".$user['id']."', '".$payment_amount."', 'paypal', NOW(), '".$payer_email."', '".$get_data[2]."', '".$txn_id."')");
-				if($user['id'] > 0){
-					$db->Query("UPDATE `users` SET `account_balance`=`account_balance`+'".$payment_amount."' WHERE `id`='".$user['id']."'");			
+		if($receiver_email == $site['paypal']){
+			$user = $db->QueryFetchArray("SELECT id,login FROM `users` WHERE `id`='".$get_data[0]."' LIMIT 1");
+			if($site['paypal_auto'] == 1){
+				if($db->QueryGetNumRows("SELECT * FROM `transactions` WHERE `gateway`='paypal' AND `trans_id`='".$txn_id."' LIMIT 1") == 0){
+					$db->Query("INSERT INTO `transactions` (`user`, `user_id`, `money`, `gateway`, `date`, `payer_email`, `user_ip`, `trans_id`) VALUES('".$user['login']."','".$user['id']."', '".$payment_amount."', 'paypal', NOW(), '".$payer_email."', '".$get_data[2]."', '".$txn_id."')");
+					if($user['id'] > 0){
+						$db->Query("UPDATE `users` SET `account_balance`=`account_balance`+'".$payment_amount."' WHERE `id`='".$user['id']."'");			
+					}
+				} else if (DEBUG == true) {
+					error_log(date('[Y-m-d H:i e] '). "Payment already processed: #$txn_id" . PHP_EOL, 3, LOG_FILE);
 				}
-			} else if (DEBUG == true) {
-				error_log(date('[Y-m-d H:i e] '). "Payment already processed: #$txn_id" . PHP_EOL, 3, LOG_FILE);
+			}else{
+				if($db->QueryGetNumRows("SELECT * FROM `transactions` WHERE `gateway`='paypal' AND `trans_id`='".$txn_id."' LIMIT 1") == 0){
+					$db->Query("INSERT INTO `transactions` (`user`, `user_id`, `money`, `gateway`, `date`, `paid`, `payer_email`, `user_ip`, `trans_id`) VALUES('".$user['login']."','".$user['id']."', '".$payment_amount."', 'paypal', NOW(), '0', '".$payer_email."', '".$get_data[2]."', '".$txn_id."')");
+				}
 			}
-		}else{
-			if($db->QueryGetNumRows("SELECT * FROM `transactions` WHERE `gateway`='paypal' AND `trans_id`='".$txn_id."' LIMIT 1") == 0){
-				$db->Query("INSERT INTO `transactions` (`user`, `user_id`, `money`, `gateway`, `date`, `paid`, `payer_email`, `user_ip`, `trans_id`) VALUES('".$user['login']."','".$user['id']."', '".$payment_amount."', 'paypal', NOW(), '0', '".$payer_email."', '".$get_data[2]."', '".$txn_id."')");
-			}
+		} else if (DEBUG == true) {
+			error_log(date('[Y-m-d H:i e] '). "Different receiver PayPal email: $receiver_email" . PHP_EOL, 3, LOG_FILE);
 		}
 	} else if (DEBUG == true) {
 		error_log(date('[Y-m-d H:i e] '). "Invalid Payment Status: $payment_status" . PHP_EOL, 3, LOG_FILE);

@@ -34,35 +34,6 @@ if(isset($_POST['submit'])) {
 <form method="post">
 	<input class="l_form" onfocus="if(this.value == '<?=$lang['b_59']?>') { this.value = ''; }" onblur="if(this.value=='') { this.value = this.defaultValue }" value="<?=$lang['b_59']?>" name="code" type="text">
 	<input type="submit" class="gbut" name="submit" value="<?=$lang['b_58']?>" />
-</form><?=$msg?><br />
-<h2 class="title"><?=$lang['b_365']?></h2>
-<table class="table">
-	<thead>
-		<tr>
-			<td width="35"><?=$lang['b_154']?></td>
-			<td><?=$lang['b_59']?></td>
-			<td><?=$lang['b_327']?></td>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr><td colspan="4"><center><?=$lang['b_153']?></center></td></tr>
-	</tfoot>
-	<tbody>
-<?
-$coupons = $db->QueryFetchArrayAll("SELECT a.id,b.code,b.coins,b.type FROM used_coupons a LEFT JOIN coupons b ON b.id = a.coupon_id WHERE a.user_id='".$data['id']."' ORDER BY a.id DESC LIMIT 5");
-if(!$coupons){
-	echo '<tr><td colspan="4"><center>'.$lang['b_250'].'</center></td></tr>';
-}
-
-foreach($coupons as $coupon){
-?>	
-	<tr>
-		<td><?=$coupon['id']?></td>
-		<td><?=$coupon['code']?></td>
-		<td><?=$coupon['coins'].' '.($coupon['type'] == 1 ? $lang['b_246'] : $lang['b_156'])?></td>
-	</tr>
-<?}?>
-	</tbody>
-</table>
+</form><?=$msg?>
 </div>	
 <?include('footer.php');?>

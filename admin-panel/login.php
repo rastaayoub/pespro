@@ -1,10 +1,12 @@
-<?php
+<?
 define('BASEPATH', true);
 include('../system/config.php');
 if($is_online && $data['admin'] == 0){
     redirect($site['site_url']);
+    exit;
 }elseif($is_online && $data['admin'] == 1){
 	redirect('index.php');
+    exit;
 }
 
 $errMsg = '';
@@ -31,7 +33,7 @@ if(isset($_POST['connect'])) {
 <head><title>PES Pro - Admin Panel</title>
 	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="author" content="MafiaNet (c) MN-Shop.com">
+	<meta name="author" content="MafiaNet (c) MN-Shop.net">
 	<link rel="stylesheet" href="css/fullcss.css">
 	<!--[if IE 8]><link rel="stylesheet" href="css/fonts/font-awesome-ie7.css"><![endif]-->
 
@@ -39,12 +41,12 @@ if(isset($_POST['connect'])) {
 	<!--[if lt IE 9]><script src="js/mylibs/polyfills/selectivizr-min.js"></script><![endif]-->
 	<!--[if lt IE 10]><script src="js/mylibs/polyfills/excanvas.js"></script><![endif]-->
 	<!--[if lt IE 10]><script src="js/mylibs/polyfills/classlist.js"></script><![endif]-->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
 	<!--[if gt IE 8]><!-->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.4.2/lodash.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.4.2/lodash.min.js"></script>
 	<!--<![endif]-->
-	<!--[if lt IE 9]><script src="//documentcloud.github.com/underscore/underscore.js"></script><![endif]-->
+	<!--[if lt IE 9]><script src="http://documentcloud.github.com/underscore/underscore.js"></script><![endif]-->
 
 	<!-- General Scripts -->
 	<script src="js/mylibs/fulljs.js"></script>
@@ -68,14 +70,13 @@ if(isset($_POST['connect'])) {
 			<div class="right">
 				<ul>
 					<li><a href="<?=$site['site_url']?>">View Website</a></li>
-					<li class="red"><a target="_blank" href="http://mn-shop.com/powerful-exchange-system-pro">PES Pro</a></li>
 				</ul>
 			</div>
 		</div>
 	</section>
 		<header class="container_12">
 		<div class="container">
-			<a href="<?=$site['site_url']?>/admin-panel"><img src="img/logo.png" alt="PES Pro" width="181" height="46"></a>
+			<a href="<?=$site['site_url']?>/admin-panel"><img src="img/logo.png" alt="Mango" width="181" height="46"></a>
 		</div>
 	</header>
 	<section id="login" class="container_12 clearfix">

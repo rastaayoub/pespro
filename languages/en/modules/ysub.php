@@ -15,5 +15,9 @@ $lang['ysub_11'] = 'Press "Subscribe" on the site, then press "Subscribe" on You
 $lang['ysub_12'] = 'Add your Youtube account first!';
 $lang['ysub_13'] = 'Subscribe';
 $lang['ysub_14'] = 'Subscribe user and after that close window!';
+$lang['ysub_15'] = 'skip';
+$lang['ysub_16'] = 'SUCCESS! You skipped this user!';
 $lang['ysub_17'] = 'Youtube says you aren\'t subscribed to this user!';
+$lang['ysub_18'] = 'SUCCESS!';
+$lang['ysub_19'] = ' coins were added to your account!';
 ?>

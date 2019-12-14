@@ -37,16 +37,12 @@ if(isset($_POST['usubmit'])){
 					<div><select name="set[surf_time_type]"><option value="0">Fixed Time</option><option value="1"<?=($site['surf_time_type'] == 1 && !isset($_POST['surf_time_type']) ? ' selected' : (isset($_POST['surf_time_type']) && $_POST['surf_time_type'] == 1 ? ' selected' : ''))?>>Based on CPC</option></select></div>
 				</div>
 				<div class="row">
-					<label><strong>Traffic Exchange Time</strong></label>
+					<label><strong>Traffic Exchange time</strong></label>
 					<div><input type="text" name="set[surf_time]" value="<?=$site['surf_time']?>" title="How many seconds?" required /></div>
 				</div>
 				<div class="row">
-					<label><strong>Free User Exchange Type</strong><small>Traffic Exchange system for free users</small></label>
+					<label><strong>Traffic Exchange type</strong></label>
 					<div><select name="set[surf_type]"><option value="0">Auto-Surf</option><option value="1"<?=($site['surf_type'] == 1 && !isset($_POST['surf_type']) ? ' selected' : (isset($_POST['surf_type']) && $_POST['surf_type'] == 1 ? ' selected' : ''))?>>Manual-Surf</option><option value="2"<?=($site['surf_type'] == 2 && !isset($_POST['surf_type']) ? ' selected' : (isset($_POST['surf_type']) && $_POST['surf_type'] == 2 ? ' selected' : ''))?>>Popup-Surf</option></select></div>
-				</div>
-				<div class="row">
-					<label><strong>VIP User Exchange Type</strong><small>Traffic Exchange system for free users</small></label>
-					<div><select name="set[vip_surf_type]"><option value="0">Auto-Surf</option><option value="1"<?=($site['vip_surf_type'] == 1 && !isset($_POST['vip_surf_type']) ? ' selected' : (isset($_POST['vip_surf_type']) && $_POST['vip_surf_type'] == 1 ? ' selected' : ''))?>>Manual-Surf</option><option value="2"<?=($site['vip_surf_type'] == 2 && !isset($_POST['vip_surf_type']) ? ' selected' : (isset($_POST['vip_surf_type']) && $_POST['vip_surf_type'] == 2 ? ' selected' : ''))?>>Popup-Surf</option></select></div>
 				</div>
 			</div>
 			<div class="actions">
