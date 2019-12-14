@@ -1,1 +1,6 @@
-composer require "ext-gd:*" --ignore-platform-reqs
+{
+    "name": "Omribit/StouchiTN",
+    "require": {
+        "ext-gd": "*"
+    }
+}
