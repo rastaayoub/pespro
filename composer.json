@@ -1,1 +1,6 @@
-{}
+{
+    "name": "ghost/pespro",
+    "require": {
+        "ext-gd": "*"
+    }
+}
