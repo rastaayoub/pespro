@@ -1,6 +1,7 @@
 {
-    "name": "ghost/pespro",
+    "name": "omribit/stouchitn",
     "require": {
         "ext-gd": "*"
+		"php": "^5.6.39"
     }
 }
