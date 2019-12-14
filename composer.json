@@ -1,5 +1,1 @@
-{
-    "require": {
-        "ext-Gd": "*"
-    }
-}
+composer require "ext-gd:*" --ignore-platform-reqs
