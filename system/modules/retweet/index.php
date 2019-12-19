@@ -1,8 +1,4 @@
 <?php
-if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
-	include_once(realpath(dirname(__FILE__)).'/db_update.php');
-}
-
 register_filter('index_icons','rtt_icon');
 function rtt_icon($icons) {
 	global $is_online;

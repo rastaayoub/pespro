@@ -29,7 +29,7 @@ if(empty($url)){
 	}elseif($twitter['protected'] == 1){
 		$msg = '<div class="msg"><div class="error">'.$lang['twt_20'].'</div></div>';
 	}else{
-		$db->Query("INSERT INTO `twitter` (user, url, title, t_img, t_id, max_clicks, daily_clicks, cpc, country, sex) VALUES('".$data['id']."', '".$twitter['screen_name']."', '".$twitter['name']."', '".$twitter['profile_image_url_https']."', '".$twitter['id']."', '".$max_clicks."', '".$daily_clicks."', '".$cpc."', '".$country."', '".$gender."') ");
+		$db->Query("INSERT INTO `twitter` (user, url, title, t_id, max_clicks, daily_clicks, cpc, country, sex) VALUES('".$data['id']."', '".$twitter['screen_name']."', '".$twitter['name']."', '".$twitter['id']."', '".$max_clicks."', '".$daily_clicks."', '".$cpc."', '".$country."', '".$gender."') ");
 		$msg = '<div class="msg"><div class="success">'.$lang['twt_04'].'</div></div>';
 		$error = 0;
 	}

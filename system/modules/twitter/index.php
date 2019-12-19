@@ -1,8 +1,4 @@
 <?php
-if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
-	include_once(realpath(dirname(__FILE__)).'/db_update.php');
-}
-
 register_filter('index_icons','index_icons');
 function index_icons($icons) {
 	global $is_online;
@@ -16,16 +12,10 @@ function index_icons($icons) {
 	return $icons;
 }
 
-register_filter('exchange_menu','twitter_top_menu');
+register_filter('top_menu_earn','twitter_top_menu');
 function twitter_top_menu($menu) {
-	$selected = (isset($_GET['p']) && $_GET['p'] == 'twitter' || isset($_GET['p']) && $_GET['p'] == 'retweet' ? ' active' : '');
-	return $menu . '<div class="ucp_link'.$selected.'" onclick="openMenu(\'twitterMenu\'); $(this).find(\'span\').toggleClass(\'expanded\'); return false;">Twitter <span class="collapsed"></span></div>
-				<div id="twitterMenu" class="subMenu">
-					<a href="p.php?p=twitter">Twitter Followers</a>
-					<a href="p.php?p=retweet">Twitter Tweet</a>
-					<a href="p.php?p=twitter_retweet">Twitter Retweet</a>
-					<a href="p.php?p=twitter_favorite">Twitter Favorites</a>
-				</div>';
+	$selected = (isset($_GET["p"]) && $_GET["p"] == "twitter" ? ' active' : '');
+	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=twitter">Twitter</a></div>';
 }
 
 register_filter('site_menu','twitter_site_menu');

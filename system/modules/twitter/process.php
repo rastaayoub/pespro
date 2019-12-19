@@ -25,26 +25,21 @@ if(isset($_POST['get']) && $_POST['pid'] > 0){
 
 	$result	= $db->Query("INSERT INTO `module_session` (`user_id`,`page_id`,`ses_key`,`module`,`timestamp`)VALUES('".$data['id']."','".$pid."','".$key."','twitter','".time()."') ON DUPLICATE KEY UPDATE `ses_key`='".$key."'");
 
-	$msg = ($result ? '<div class="msg"><div class="info">'.$lang['twt_13'].'</div></div>' : '<div class="msg"><div class="error">We cannot contact Twitter...</div></div>');
-	$type = ($result ? 'success' : 'error');
-
-	$resultData = array('message' => $msg, 'type' => $type);
-
-	header('Content-type: application/json');
-	echo json_encode($resultData);
+	if($result){
+		echo '1';
+	}
 }elseif(isset($_POST['step']) && $_POST['step'] == "skip" && is_numeric($_POST['sid']) && !empty($data['id'])){
 	$id = $db->EscapeString($_POST['sid']);
 	if($db->QueryGetNumRows("SELECT site_id FROM `followed` WHERE `user_id`='".$data['id']."' AND `site_id`='".$id."' LIMIT 1") == 0){
 		$db->Query("INSERT INTO `followed` (user_id, site_id) VALUES('".$data['id']."', '".$id."')");
-		echo '<div class="msg"><div class="info">'.$lang['b_359'].'</div></div>';
+		echo '<div class="msg"><div class="info">'.$lang['twt_16'].'</div></div>';
 	}
 }elseif(isset($_POST['id']) && !empty($data['id'])){
 	$uid = $db->EscapeString($_POST['id']);
 	$sit = $db->QueryFetchArray("SELECT a.id,a.user,a.url,a.cpc,b.id AS uid,b.coins FROM twitter a JOIN users b ON b.id = a.user WHERE a.id = '".$uid."' LIMIT 1");
 
 	if(empty($sit['uid']) || empty($sit['id']) || empty($data['id']) || $sit['coins'] < $sit['cpc'] || $sit['cpc'] < 2){
-		$msg = '<div class="msg"><div class="error">'.$lang['b_300'].'</div></div>';
-		$type = 'not_available';
+		echo '5';
 	}else{
 		$mod_ses = $db->QueryFetchArray("SELECT ses_key FROM `module_session` WHERE `user_id`='".$data['id']."' AND `page_id`='".$sit['id']."' AND `module`='twitter' LIMIT 1");
 
@@ -65,22 +60,14 @@ if(isset($_POST['get']) && $_POST['pid'] > 0){
 				$db->Query("UPDATE `module_session` SET `ses_key`='".$followers['followers_count']."' WHERE (`page_id`='".$sit['id']."' AND `module`='twitter') AND `ses_key`='".($followers['followers_count']-1)."'");
 				$db->Query("INSERT INTO `user_clicks` (`uid`,`module`,`total_clicks`,`today_clicks`)VALUES('".$data['id']."','twitter','1','1') ON DUPLICATE KEY UPDATE `total_clicks`=`total_clicks`+'1', `today_clicks`=`today_clicks`+'1'");
 
-				$msg = '<div class="msg"><div class="success">'.lang_rep($lang['b_358'], array('-NUM-' => ($sit['cpc']-1))).'</div></div>';
-				$type = 'success';
+				echo '1';
 			}else{
-				$msg = '<div class="msg"><div class="error">'.$lang['b_300'].'</div></div>';
-				$type = 'not_available';
+				echo '5';
 			}
 		}else{
-			$msg = '<div class="msg"><div class="error">'.$lang['twt_17'].'</div></div>';
-			$type = 'error';
+			echo '0';
 		}
 	}
-
-	$resultData = array('message' => $msg, 'type' => $type);
-
-	header('Content-type: application/json');
-	echo json_encode($resultData);
 }
 $db->Close();
 ?>

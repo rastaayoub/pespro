@@ -1,8 +1,4 @@
 <?php
-if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
-	include_once(realpath(dirname(__FILE__)).'/db_update.php');
-}
-
 register_filter('index_icons','surf_icon');
 function surf_icon($icons) {
 	global $is_online, $site;
@@ -16,14 +12,11 @@ function surf_icon($icons) {
 	return $icons;
 }
 
-register_filter('exchange_menu','surf_top_menu');
+register_filter('top_menu_earn','surf_top_menu');
 function surf_top_menu($menu) {
-	global $site, $data;
-	
-	$surfType = ($data['premium'] > 0 && isset($site['vip_surf_type']) ? $site['vip_surf_type'] : $site['surf_type']);
-	
+	global $site;
 	$selected = (isset($_GET["p"]) && $_GET["p"] == "surf" ? ' active' : '');
-	if($surfType == 0){
+	if($site['surf_type'] == 0){
 		return $menu . '<div class="ucp_link"><a target="_blank" href="surf.php">Traffic Exchange</a></div>';
 	}else{
 		return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=surf">Traffic Exchange</a></div>';

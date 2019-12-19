@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `scf_done` (
   `user_id` int(255) NOT NULL,
   `site_id` int(255) NOT NULL,
-  UNIQUE KEY `unique_id` (`user_id`,`site_id`)
+  INDEX ( `site_id` )
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 

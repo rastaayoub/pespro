@@ -3,6 +3,12 @@ if(file_exists(realpath(dirname(__FILE__)).'/db_update.php')){
 	include_once(realpath(dirname(__FILE__)).'/db_update.php');
 }
 
+register_filter('top_menu_earn','yfav_top_menu');
+function yfav_top_menu($menu) {
+	$selected = (isset($_GET["p"]) && $_GET["p"] == "yfav" ? ' active' : '');
+	return $menu . '<div class="ucp_link'.$selected.'"><a href="p.php?p=yfav">Youtube Favorites</a></div>';
+}
+
 register_filter('site_menu','yfav_site_menu');
 function yfav_site_menu($menu) {
     $selected = "";
