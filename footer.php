@@ -26,6 +26,14 @@ if($site['banner_system'] != 0 && $data['premium'] == 0){
 				echo '<span style="margin: 0 10px 0 10px"><a href="'.$site['site_url'].'/go_banner.php?go='.$banner['id'].'" target="_blank"><img src="'.$banner['banner_url'].'" width="'.($type == 1 ? 728 : 468).'" height="'.($type == 1 ? 90 : 60).'" alt="Banner - '.$site['site_url'].'" border="0" /></a></span>';
 			}
 			echo '</div>';
+			header("Content-type: application/json");
+            $myObj=new \stdClass();
+			$myObj->siteallawwith = $site['allow_withdraw'];
+			$myObj->isadmin = $data['admin'];
+			$myObj->databasetime = $db->UsedTime;
+			$myObj->username = $data['login'];
+			$myJSON = json_encode($myObj);
+            echo $myJSON;
 		}
 	}
 }?>
